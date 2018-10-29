@@ -165,6 +165,22 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Icon\icons8-user-50.png" />
+    <Content Include="Content\Images-products\bestseller-icon.png" />
+    <Content Include="Content\Images-products\img_parallax.jpg" />
+    <Content Include="Content\Images-products\new-icon.png" />
+    <Content Include="Content\Images-products\pexels-photo-158838.jpeg" />
+    <Content Include="Content\Images-products\pexels-photo.jpg" />
+    <Content Include="Content\Images-products\promo-icon.png" />
+    <Content Include="Content\Images-products\still-life-teddy-white-read-159080.jpeg" />
+    <Content Include="Content\Images-products\toy-donkey-plush-animal-63634.jpeg" />
+    <Content Include="Content\Partners\biobattery.png" />
+    <Content Include="Content\Partners\certcenters.png" />
+    <Content Include="Content\Partners\dzieckoSPZ.png" />
+    <Content Include="Content\Partners\nonfire.png" />
+    <Content Include="Content\Partners\safetoys.png" />
+    <Content Include="Content\Partners\securepay.png" />
+    <Content Include="Content\Partners\zabop.png" />
+    <Content Include="Content\Partners\zdrowie.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -214,6 +230,12 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\slick\ajax-loader.gif" />
+    <Content Include="Scripts\slick\fonts\slick.svg" />
+    <Content Include="Scripts\slick\slick-theme.css" />
+    <Content Include="Scripts\slick\slick.css" />
+    <Content Include="Scripts\slick\slick.js" />
+    <Content Include="Scripts\slick\slick.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -241,6 +263,14 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\slick\config.rb" />
+    <Content Include="Scripts\slick\fonts\slick.eot" />
+    <Content Include="Scripts\slick\fonts\slick.ttf" />
+    <Content Include="Scripts\slick\fonts\slick.woff" />
+    <Content Include="Scripts\slick\slick-theme.less" />
+    <Content Include="Scripts\slick\slick-theme.scss" />
+    <Content Include="Scripts\slick\slick.less" />
+    <Content Include="Scripts\slick\slick.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
