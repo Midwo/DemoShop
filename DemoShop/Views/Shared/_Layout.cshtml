@@ -109,13 +109,22 @@
         </div>*@
 
 
+
     @RenderBody()
 
 
 
-    <hr />
+
     <footer>
-        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <div class="container text-center">
+
+            <div class="call-to-action">
+                <p>&copy; @DateTime.Now.Year - Michał Dwojak - Wersja demonstracyjna sklepu.</p>
+                <input class="btn btn-info btn-xl sr-button" type="button" value="Polityka prywatności" onclick="location.href='@Url.Action("Policy", "Home")'" />
+                <input class="btn btn-info btn-xl sr-button" type="button" value="Regulamin" onclick="location.href='@Url.Action("Statute", "Home")'" />
+                <input class="btn btn-success btn-xl sr-button" type="button" value="Wróć do mdwojak.pl" onclick="location.href='http://mdwojak.pl';" />
+            </div>
+        </div>
     </footer>
 
 
@@ -124,7 +133,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/slick")
 
-  
+
 
     @RenderSection("scripts", required: false)
 

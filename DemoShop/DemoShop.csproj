@@ -164,6 +164,14 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\IconsMenuProduct\icons8-beach-ball-30.png" />
+    <Content Include="Content\IconsMenuProduct\icons8-clothes-30.png" />
+    <Content Include="Content\IconsMenuProduct\icons8-design-30.png" />
+    <Content Include="Content\IconsMenuProduct\icons8-musical-notes-30.png" />
+    <Content Include="Content\IconsMenuProduct\icons8-protect-30.png" />
+    <Content Include="Content\IconsMenuProduct\icons8-school-30.png" />
+    <Content Include="Content\IconsMenuProduct\icons8-select-all-30.png" />
+    <Content Include="Content\IconsMenuProduct\icons8-video-camera-30.png" />
     <Content Include="Content\Icon\icons8-user-50.png" />
     <Content Include="Content\Images-products\bestseller-icon.png" />
     <Content Include="Content\Images-products\img_parallax.jpg" />
