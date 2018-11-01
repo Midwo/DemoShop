@@ -388,3 +388,32 @@ footer {
     border-radius: 0.3rem;
 }
 
+/*index view - title background*/
+.con-newproduct {
+    background-color: #f68317;
+    color: white;
+    border-radius: 20px;
+    letter-spacing: 8px;
+    padding-top: 2px;
+    margin-top: 5px;
+}
+
+.con-bestseller {
+    background-color: #119a9a;
+    color: white;
+    border-radius: 20px;
+    letter-spacing: 8px;
+    padding-top: 2px;
+    margin-top: 5px;
+}
+.con-promotion {
+    background-color: #b33c3c;
+    color: white;
+    border-radius: 20px;
+    letter-spacing: 8px;
+    padding-top: 2px;
+    margin-top: 5px;
+}
+.margintopsmall{
+    margin-top: 60px;
+}
