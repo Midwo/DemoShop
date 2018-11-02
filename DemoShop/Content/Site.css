@@ -1,4 +1,8 @@
-﻿/* Set padding to keep content from hitting the edges */
+﻿html, body {
+    height: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -377,8 +381,8 @@ footer {
     }
 
     .menu-horizontal ul li a:link {
-     color: black;
-     text-decoration: none;
+        color: black;
+        text-decoration: none;
     }
 
 .jumbotron-index {
@@ -406,6 +410,7 @@ footer {
     padding-top: 2px;
     margin-top: 5px;
 }
+
 .con-promotion {
     background-color: #b33c3c;
     color: white;
@@ -414,6 +419,92 @@ footer {
     padding-top: 2px;
     margin-top: 5px;
 }
-.margintopsmall{
+
+.margintopsmall {
     margin-top: 60px;
 }
+
+
+
+/*Footer options*/
+#wrapper {
+    width: auto;
+    min-height: calc(100% - 205px);
+}
+
+
+
+/*cost view*/
+
+.costlist {
+    list-style-type: none;
+    border: 1px solid #c8c8c8;
+    padding: 0;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    margin: 0;
+}
+.touchget {
+    padding: 0;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    margin: 0;
+    position:relative;
+}
+
+.touchget:hover {
+    -webkit-box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.55);
+    -moz-box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.55);
+    box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.55);
+    margin-top: -5px;
+}
+
+    .costlist .title {
+        font-size: 23px;
+        background-color: #353c42;
+        color: white;
+    }
+
+    .costlist .title-unique {
+        font-size: 23px;
+        background-color: rgba(47, 156, 220, 0.84);
+        color: white;
+
+    }
+
+    .costlist li {
+        border-bottom: 1px solid #c8c8c8;
+        padding: 22px;
+        text-align: center;
+    }
+
+    .costlist .undertitle {
+        font-size: 20px;
+        background-color: #353c42;
+        color: white;
+    }
+    .costlist .description {
+        font-size: 20px;
+        background-color: #c8c8c8;
+        color: white;
+    }
+    .costlist .undertitle-unique {
+        font-size: 20px;
+        background-color: rgba(47, 156, 220, 0.84);
+        color: white;
+    }
+
+.overlaycostlist {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+}
+
+.overlaycostlist-best {
+    background: url(Images-products/thebest.png) no-repeat;
+    left: auto;
+    right: 0;
+}
+
