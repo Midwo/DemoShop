@@ -167,6 +167,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AboutSlider\pexels-photo-145465.jpeg" />
+    <Content Include="Content\AboutSlider\pexels-photo-356830.jpeg" />
+    <Content Include="Content\AboutSlider\pexels-photo-417382.jpeg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />

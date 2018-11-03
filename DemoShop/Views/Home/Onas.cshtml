@@ -3,28 +3,68 @@
     ViewBag.Title = "Onas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="carouselExampleIndicators" class="carousel slide container_content" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner radius_carousel">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="@Url.Content("~/Content/AboutSlider/pexels-photo-145465.jpeg")" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+                <div class="carousel_block">
+                    <h5>Magazyny</h5>
+                    <p>Posiadamy własne magazyny wysyłkowe</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="@Url.Content("~/Content/AboutSlider/pexels-photo-356830.jpeg")" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block">
+                <div class="carousel_block">
+                    <h5>Biura</h5>
+                    <p>Znajdziesz nas w każdym większym mieście</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="@Url.Content("~/Content/AboutSlider/pexels-photo-417382.jpeg")" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+                <div class="carousel_block">
+                    <h5>Innowacja</h5>
+                    <p>Oferujemy nowe i wyśmienite produkty</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 
-<h2 class="text-center" style="margin-top:20px;">Regulamin</h2>
-<h3 class="text-center">Sklepu demonstracyjengo MD Shop</h3>
+
+
+<h2 class="text-center" style="margin-top:20px;">O nas</h2>
+<h3 class="text-center">Garść informacji o naszej firmie</h3>
 <div class="row container_content">
 
     <ol>
         <li>
-            Podstawowe informacje na temat sklepu
-            <ol>
+            Dane na temat firmy:
+            <ul>
                 <li>
-                    Sklep internetowy nie wysyła żadnego towaru – jest to strona demonstracyjna.
+                    Adres siedziby: ul. Sokolska 309 New York, ul. Fińska 33B Chicago, ul. Bemowofilca 941C Warszawa 
                 </li>
                 <li>
-                    Wszystkie dane dotyczące płatności, są danymi testowymi – poglądowymi.
+                    Ilość zatrudnionych osób: 409
                 </li>
-                <li>
-                    Nie ma możliwości otrzymania towaru ani zwrotu pieniędzy – ponieważ przelewy realizowane są z wymyślonego przykładowego numeru bankowego, który nie należy do autora strony.
-                </li>
-                <li>
-                    Wszelkie błędy znalezione w funkcjonowaniu sklepu w wersji demonstracyjnej proszę kierować na adres: michal.dwojak92@gmail.com lub michal@mdwojak.pl.
-                </li>
-            </ol>
+            </ul>
         </li>
         <li>
             Wysyłka

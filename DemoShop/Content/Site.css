@@ -508,3 +508,24 @@ footer {
     right: 0;
 }
 
+/*View Onas(about us)*/
+.w-100 {
+    width: 100% !important;
+    max-height: 300px;
+}
+
+
+/*abous us - view*/
+.radius_carousel {
+    border-radius: 0px 0px 20px 20px;
+}
+
+.carousel_block {
+    background-color: rgba(33, 23, 33, 0.36);
+    width: 340px;
+    margin: auto;
+    padding: 5px 10px 0px 5px;
+    border-color: grey;
+    border-style: solid;
+    border-radius: 8px;
+}
