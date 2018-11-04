@@ -3,6 +3,112 @@
     ViewBag.Title = "Kontakt";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="jumbotron-index jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Dane Kontaktowe</h1>
+        
+        <div class="row" style="margin:auto;">
+            <div class="col-lg-4 text-center">
+                <h2 class="contact-title">W placówce:</h2>
+                <ol class="list_nondecorations">
+                    <li>
+                        Dąbrowa Górnicza 42-510 ul. Jana Pietra 93A
+                    </li>
+                    <li>
+                        Godziny otwarcia:
+                        <ol class="list_decorations">
+                            <li style="margin-left:4px;">
+                                Pon-PT: 9:00 - 15:00
+                            </li>
+                            <li style="margin-left:4px;">
+                                Sob-Nd: 10:00 - 14:00
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
 
-<h2>Kontakt</h2>
+            </div>
+
+            <div class="col-lg-4 text-center borderinrow">
+                <h2 class="contact-title">Infolinia:</h2>
+                <ol class="list_nondecorations">
+                    <li>
+                        Numer: (48) 555-444-333
+                        <ol class="list_decorations">
+                            <li style="margin-left:4px;">
+                                Pon-PT: 8:00 - 21:00
+                            </li>
+                            <li style="margin-left:4px;">
+                                Sob-Nd: 9:00 - 18:00
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+
+            </div>  
+       
+            <div class="col-lg-4 text-center">
+                <h2 class="contact-title">Email:</h2>
+                <ol class="list_nondecorations">
+                    <li>
+                        Informacja
+                        <ol class="list_decorations">
+                            <li style="margin-left:4px;">
+                                michal.dwojak92@gmail.com
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        Reklamacja
+                        <ol class="list_decorations">
+                            <li style="margin-left:4px;">
+                                michal@mdwojak.pl
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+   
+
+    </div>
+</div>
+
+
+
+
+
+<section id="container_content">
+    <div class="container container_content">
+        <div class="well well-sm">
+            <h3><strong>Lokalizacja na mapie:</strong></h3>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7" style="margin-bottom: 60px;">
+                <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=19.18375968933106%2C50.33228556267498%2C19.212942123413086%2C50.35509956048053&amp;layer=mapnik&amp;marker=50.34370762530209%2C19.19835090637207" style="border: 1px solid black"></iframe><br /><small><a href="https://www.openstreetmap.org/?mlat=50.3437&amp;mlon=19.1984#map=15/50.3437/19.1984&amp;layers=N">Wyświetl większą mapę</a></small>
+            </div>
+            <div class="col-md-5" style="margin-bottom: 60px;">
+                <h4><strong>Napisz przez stronę:</strong></h4>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="" value="" placeholder="Imię">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="" value="" placeholder="E-mail">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" name="" value="" placeholder="Telefon">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="" rows="3" placeholder="Treść wiadomości"></textarea>
+                    </div>
+                    <button class="btn btn-default" type="submit" name="button">
+                        <i class="fa fa-mail-forward" aria-hidden="true"></i> Wyślij pytanie
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
