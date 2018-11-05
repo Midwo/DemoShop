@@ -184,19 +184,19 @@ textarea {
 }
 
 .overlay-new {
-    background: url(Images-products/new-icon.png) no-repeat;
+    background: url(overlay/new-icon.png) no-repeat;
     left: auto;
     right: 0;
 }
 
 .overlay-promotion {
-    background: url(Images-products/promo-icon.png) no-repeat;
+    background: url(overlay/promo-icon.png) no-repeat;
     left: auto;
     right: 0;
 }
 
 .overlay-bestseller {
-    background: url(Images-products/bestseller-icon.png) no-repeat;
+    background: url(overlay/bestseller-icon.png) no-repeat;
     left: auto;
     right: 0;
 }
@@ -503,7 +503,7 @@ footer {
 }
 
 .overlaycostlist-best {
-    background: url(Images-products/thebest.png) no-repeat;
+    background: url(overlay/thebest.png) no-repeat;
     left: auto;
     right: 0;
 }
