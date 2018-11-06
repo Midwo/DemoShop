@@ -11,7 +11,7 @@ namespace DemoShop.Models
         public int ProductID { get; set; }
         
         //field with virtual class - key 
-        public int ProductID { get; set; }
+      //  public int ProductID { get; set; }
 
         public string ProductTitle { get; set; }
         public DateTime AddDate { get; set; }
