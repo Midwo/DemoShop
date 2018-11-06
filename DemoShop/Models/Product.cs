@@ -15,6 +15,7 @@ namespace DemoShop.Models
 
         public string ProductTitle { get; set; }
         public DateTime AddDate { get; set; }
-        public string  
+        public string  Description { get; set; }
+        public decimal Price { get; set; }
     }
 }
