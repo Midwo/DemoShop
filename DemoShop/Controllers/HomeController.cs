@@ -13,9 +13,10 @@ namespace DemoShop.Controllers
         private DemoShopContext db = new DemoShopContext(); 
         public ActionResult Index()
         {
-            Category newCategory = new Category { Title = "Miś", Description = "Coś", Active = true, FileNamePhoto = "jajko" };
-            db.Categories.Add(newCategory);
-            db.SaveChanges();
+            //Category newCategory = new Category { Title = "Miś", Description = "Coś", Active = true, FileNamePhoto = "jajko" };
+            //db.Categories.Add(newCategory);
+            //db.SaveChanges();
+            var list = db.Categories.ToList();
             return View();
         }
 

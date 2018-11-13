@@ -22,6 +22,9 @@ namespace DemoShop.Models
         [Display(Name = "Aktywny")]
         public bool Active { get; set; }
 
+        [Display(Name = "Ważna kategoria")]
+        public bool Favoritism { get; set; }
+
         public ICollection<Product> Products { get; set; }
     }
 }

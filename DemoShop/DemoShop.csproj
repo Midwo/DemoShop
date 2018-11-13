@@ -166,11 +166,25 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811131340419_InitialCreate.cs" />
+    <Compile Include="Migrations\201811131340419_InitialCreate.Designer.cs">
+      <DependentUpon>201811131340419_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131406192_deleteColumnFavoritism.cs" />
+    <Compile Include="Migrations\201811131406192_deleteColumnFavoritism.Designer.cs">
+      <DependentUpon>201811131406192_deleteColumnFavoritism.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131408062_FavoritismColumn.cs" />
+    <Compile Include="Migrations\201811131408062_FavoritismColumn.Designer.cs">
+      <DependentUpon>201811131408062_FavoritismColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\About\pexels-photo-145465.jpeg" />
@@ -364,6 +378,17 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811131340419_InitialCreate.resx">
+      <DependentUpon>201811131340419_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131406192_deleteColumnFavoritism.resx">
+      <DependentUpon>201811131406192_deleteColumnFavoritism.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131408062_FavoritismColumn.resx">
+      <DependentUpon>201811131408062_FavoritismColumn.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
