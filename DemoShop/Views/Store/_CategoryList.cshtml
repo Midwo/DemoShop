@@ -1,0 +1,29 @@
+﻿@using DemoShop.Infrastructure
+@model IEnumerable<DemoShop.Models.Category>
+
+<div class="jumbotron-index jumbotron-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Kategorie produktów:</h2>
+                <hr class="light">
+
+            </div>
+        </div>
+        <div class="menu-horizontal text-center">
+            <ul>
+                @foreach (var category in Model)
+                {
+                    <li>
+                        <a style="background-image: url(@Url.IconsMenuProduct(category.FileNamePhoto))" href="@Url.Action("ProductList","Store", new { categoryname = category.Title })">
+                            @category.Title
+                        </a>
+                    </li>
+                }
+
+            </ul>
+
+        </div>
+
+    </div>
+</div>

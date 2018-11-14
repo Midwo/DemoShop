@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoShop.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace DemoShop.Controllers
 {
     public class StoreController : Controller
     {
+        DemoShopContext db = new DemoShopContext();
         // GET: Store
         public ActionResult Index()
         {
@@ -19,10 +21,24 @@ namespace DemoShop.Controllers
             return View();
         }
 
-        public ActionResult CategoryList(string categoryname)
+        public ActionResult ProductList(string categoryname)
         {
-            return View();
+            var List = db.Categories.Include("Products").Where(a => a.Title == categoryname).Single();
+            var ProductList = List.Products.Where(a=>a.Active == true).ToList();
+
+            return View(ProductList);
         }
+
+        //Enable only with html action
+        [ChildActionOnly]
+        public ActionResult CategoryList()
+        {
+            var categoryList = db.Categories.Where(a => a.Active == true).ToList();
+            
+            //_CategoryList beacuse we have patrial with this name 
+            return PartialView("_CategoryList", categoryList);
+        }
+
 
     }
 }

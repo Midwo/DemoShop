@@ -1,0 +1,37 @@
+﻿@using DemoShop.Infrastructure
+@model IEnumerable<DemoShop.Models.Product>
+
+<section class="bg-white">
+    <div class="row container_content">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 col-12 col-sm-6">
+                <div class="item-product">
+                    <div class="product-img-wrapper">
+                        <img src="@Url.Products(product.FileNamePhoto)" class="img-fluid" alt="@product.ProductTitle">
+                        <div>
+                            <a href="@Url.Action("Details","Store", new { id = product.ProductID})" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
+                        </div>
+                    </div><hr />
+                    <h3><a href="shop-item.html">@product.ProductTitle</a></h3>
+                    <div class="product-price">@product.Price zł</div>
+                    <a href="@Url.Action("AddToShoppingCart","ShoppingCart", new { id = product.ProductID });" class="btn add2cart">
+                        Kup&nbsp;<i class="fa fa-cart-plus"></i>
+                    </a>
+                    @if (product.TheBestProduct == true)
+                    {
+                        <div class="overlay overlay-bestseller"></div>
+                    }
+                    else if (product.Promotion == true)
+                    {
+                        <div class="overlay overlay-promotion"></div>
+                    }
+                   
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+</section>

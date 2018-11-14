@@ -1,4 +1,7 @@
-﻿@{
+﻿@model DemoShop.ViewModels.HomeViewModel
+@using DemoShop.Infrastructure
+
+@{
     ViewBag.Title = "Home Page";
 }
 @*<div class="container_content">
@@ -43,46 +46,15 @@
         </div>
         <div class="menu-horizontal text-center">
             <ul>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-protect-30.png"))" href="protect">
-                        Zabezpieczenia
-                    </a>
-                </li>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-beach-ball-30.png"))" href="ball">
-                        Zabawki
-                    </a>
-                </li>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-clothes-30.png"))" href="clothes">
-                        Ubrania
-                    </a>
-                </li>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-school-30.png"))" href="school">
-                        Edukacja
-                    </a>
-                </li>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-musical-notes-30.png"))" href="musial">
-                        Instumenty
-                    </a>
-                </li>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-video-camera-30.png"))" href="camera">
-                        Monitoring
-                    </a>
-                </li>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-design-30.png"))" href="design">
-                        Przybory
-                    </a>
-                </li>
-                <li>
-                    <a style="background-image: url(@Url.Content("~/Content/IconsMenuProduct/icons8-select-all-30.png"))" href="selectall">
-                        Inne
-                    </a>
-                </li>
+                @foreach (var category in Model.Categories)
+                {
+                    <li>
+                        <a style="background-image: url(@Url.IconsMenuProduct(category.FileNamePhoto))" href="@Url.Action("ProductList","Store", new { categoryname = category.Title })">
+                            @category.Title
+                        </a>
+                    </li>
+                }
+
             </ul>
 
         </div>
@@ -105,70 +77,27 @@
 
 
     <div class="row container_content">
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/pexels-photo-158838.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Bączek do bączkania</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-new"></div>
+        @foreach (var product in Model.NewProducts)
+        {
+            <div class="col-md-3 col-12 col-sm-6">
+                <div class="item-product">
+                    <div class="product-img-wrapper">
+                        <img src="@Url.Products(product.FileNamePhoto)" class="img-fluid" alt="@product.ProductTitle">
+                        <div>
+                            <a href="@Url.Action("Details","Store", new { id = product.ProductID})" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
+                        </div>
+                    </div><hr />
+                    <h3><a href="shop-item.html">@product.ProductTitle</a></h3>
+                    <div class="product-price">@product.Price zł</div>
+                    <a href="@Url.Action("AddToShoppingCart","ShoppingCart", new { id = product.ProductID });" class="btn add2cart">
+                        Kup&nbsp;<i class="fa fa-cart-plus"></i>
+                    </a>
+                    <div class="overlay overlay-new"></div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/pexels-photo.jpg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Kostka hazardzisty</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-new"></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/still-life-teddy-white-read-159080.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Miś czytaluś</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-new"></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/toy-donkey-plush-animal-63634.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Lama obserwacyjna</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-new"></div>
-            </div>
-        </div>
+
+        }
+
     </div>
 
 </section>
@@ -183,74 +112,30 @@
             </div>
         </div>
     </div>
-
-
     <div class="row container_content">
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/pexels-photo-158838.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Bączek do bączkania</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-promotion"></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/pexels-photo.jpg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Kostka hazardzisty</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-promotion"></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/still-life-teddy-white-read-159080.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Miś czytaluś</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-promotion"></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/toy-donkey-plush-animal-63634.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Lama obserwacyjna</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-promotion"></div>
+        @foreach (var product in Model.Promotions)
+        {
 
+            <div class="col-md-3 col-12 col-sm-6">
+                <div class="item-product">
+                    <div class="product-img-wrapper">
+                        <img src="@Url.Products(product.FileNamePhoto)" class="img-fluid" alt="@product.ProductTitle">
+                        <div>
+                            <a href="@Url.Action("Details","Store", new { id = product.ProductID})" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
+                        </div>
+                    </div><hr />
+                    <h3><a href="shop-item.html">@product.ProductTitle</a></h3>
+                    <div class="product-price">@product.Price zł</div>
+                    <a href="@Url.Action("AddToShoppingCart","ShoppingCart", new { id = product.ProductID });" class="btn add2cart">
+                        Kup&nbsp;<i class="fa fa-cart-plus"></i>
+                    </a>
+                    <div class="overlay overlay-promotion"></div>
+                </div>
             </div>
-        </div>
+
+
+        }
+
     </div>
 
 </section>
@@ -268,75 +153,26 @@
 
 
     <div class="row container_content">
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/pexels-photo-158838.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
+        @foreach (var product in Model.TheBestProducts)
+        {
+            <div class="col-md-3 col-12 col-sm-6">
+                <div class="item-product">
+                    <div class="product-img-wrapper">
+                        <img src="@Url.Products(product.FileNamePhoto)" class="img-fluid" alt="@product.ProductTitle">
+                        <div>
+                            <a href="@Url.Action("Details","Store", new { id = product.ProductID})" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
 
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Bączek do bączkania</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-bestseller"></div>
+                        </div>
+                    </div><hr />
+                    <h3><a href="shop-item.html">@product.ProductTitle</a></h3>
+                    <div class="product-price">@product.Price zł</div>
+                    <a href="@Url.Action("AddToShoppingCart","ShoppingCart", new { id = product.ProductID });" class="btn add2cart">
+                        Kup&nbsp;<i class="fa fa-cart-plus"></i>
+                    </a>
+                    <div class="overlay overlay-bestseller"></div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/pexels-photo.jpg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Kostka hazardzisty</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-bestseller"></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/still-life-teddy-white-read-159080.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Miś czytaluś</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-bestseller"></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-12 col-sm-6">
-            <div class="item-product">
-                <div class="product-img-wrapper">
-                    <img src="~/Content/Images-products/toy-donkey-plush-animal-63634.jpeg" class="img-fluid" alt="Bączek do bączkania">
-                    <div>
-                        <a href="#" class="btn">Zobacz&nbsp;<i class="fa fa-search"></i></a>
-
-                    </div>
-                </div><hr />
-                <h3><a href="shop-item.html">Lama obserwacyjna</a></h3>
-                <div class="product-price">55zł</div>
-                <a href="javascript:;" class="btn add2cart">
-                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
-                </a>
-                <div class="overlay overlay-bestseller"></div>
-
-            </div>
-        </div>
+        }
 
     </div>
 
@@ -347,28 +183,28 @@
 <h1 class="text-center margintopsmall"> Nasi partnerzy:</h1>
 <section class="regular slider container">
     <div>
-        <img src="~/Content/Partners/biobattery.png" />
+        <img src="@Url.Partners("biobattery.png")"/>
     </div>
     <div>
-        <img src="~/Content/Partners/certcenters.png" />
+        <img src="@Url.Partners("certcenters.png")" />
     </div>
     <div>
-        <img src="~/Content/Partners/dzieckoSPZ.png" />
+        <img src="@Url.Partners("dzieckoSPZ.png")" />
     </div>
     <div>
-        <img src="~/Content/Partners/zabop.png" />
+        <img src="@Url.Partners("zabop.png")" />
     </div>
     <div>
-        <img src="~/Content/Partners/nonfire.png" />
+        <img src="@Url.Partners("nonfire.png")" />
     </div>
     <div>
-        <img src="~/Content/Partners/safetoys.png" />
+        <img src="@Url.Partners("safetoys.png")" />
     </div>
     <div>
-        <img src="~/Content/Partners/securepay.png" />
+        <img src="@Url.Partners("securepay.png")" />
     </div>
     <div>
-        <img src="~/Content/Partners/zdrowie.png" />
+        <img src="@Url.Partners("zdrowie.png")" />
     </div>
 </section>
 

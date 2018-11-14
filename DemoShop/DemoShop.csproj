@@ -166,6 +166,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\PathHelpers.cs" />
     <Compile Include="Migrations\201811131340419_InitialCreate.cs" />
     <Compile Include="Migrations\201811131340419_InitialCreate.Designer.cs">
       <DependentUpon>201811131340419_InitialCreate.cs</DependentUpon>
@@ -212,12 +213,8 @@
     <Content Include="Content\Icon\icons8-user-50.png" />
     <Content Include="Content\overlay\bestseller-icon.png" />
     <Content Include="Content\overlay\new-icon.png" />
-    <Content Include="Content\Images-products\pexels-photo-158838.jpeg" />
-    <Content Include="Content\Images-products\pexels-photo.jpg" />
     <Content Include="Content\overlay\promo-icon.png" />
-    <Content Include="Content\Images-products\still-life-teddy-white-read-159080.jpeg" />
     <Content Include="Content\overlay\thebest.png" />
-    <Content Include="Content\Images-products\toy-donkey-plush-animal-63634.jpeg" />
     <Content Include="Content\Partners\biobattery.png" />
     <Content Include="Content\Partners\certcenters.png" />
     <Content Include="Content\Partners\dzieckoSPZ.png" />
@@ -353,7 +350,6 @@
     <Content Include="Views\Home\Kontakt.cshtml" />
     <Content Include="Views\Home\Regulamin.cshtml" />
     <Content Include="Views\Home\Wysylka.cshtml" />
-    <Content Include="Views\Store\CategoryList.cshtml" />
     <Content Include="Views\Store\Details.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -364,6 +360,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Store\_CategoryList.cshtml" />
+    <Content Include="Views\Store\ProductList.cshtml" />
+    <Content Include="Views\Store\_ProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
