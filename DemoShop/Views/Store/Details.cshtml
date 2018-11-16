@@ -1,8 +1,42 @@
-﻿
+﻿@using DemoShop.Infrastructure
+@model DemoShop.Models.Product
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<section class="bg-white">
+    <div class="row container_content text-center">
+        <div class="col-12 text-center" style="margin-top: 25px"> @Html.MvcSiteMap().SiteMapPath()</div>
 
-<h2>Details</h2>
+        <div class="col-md-8 col-8 col-sm-8 divmarginauto">
+            <div class="item-product-details">
+                <div class="product-img-wrapper-auto">
+                    <img src="@Url.Products(Model.FileNamePhoto)" class="img-fluid img-fluid-ver2" alt="@Model.ProductTitle">
+                </div><hr />
+                <h3 class="text-left">@Model.ProductTitle</h3>
+                <h4 class="text-left">@Model.Description</h4>
+                <h4 class="text-left">Producent: @Model.Manufacturer</h4>
+                <h4 class="text-left">Waga: @Model.Weight kg</h4>
+                <div class="product-price">Cena: @Model.Price zł</div>
+                <a href="@Url.Action("AddToShoppingCart","ShoppingCart", new { id = Model.ProductID })" class="btn add2cartver2">
+                    Kup&nbsp;<i class="fa fa-cart-plus"></i>
+                </a>
+                @if (Model.TheBestProduct == true)
+                {
+                    <div class="overlay overlay-bestseller"></div>
+                }
+                else if (Model.Promotion == true)
+                {
+                    <div class="overlay overlay-promotion"></div>
+                }
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</section>
+<hr />
 

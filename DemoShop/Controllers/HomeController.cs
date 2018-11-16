@@ -1,4 +1,5 @@
 ﻿using DemoShop.DAL;
+using DemoShop.Infrastructure;
 using DemoShop.Models;
 using DemoShop.ViewModels;
 using System;
@@ -14,38 +15,94 @@ namespace DemoShop.Controllers
         private DemoShopContext db = new DemoShopContext(); 
         public ActionResult Index()
         {
+            List<Product> ListProduct;
+            List<Category> ListCategory;
+            InterfaceCacheProvider cache = new DefaultCacheProvider();
 
-            var categories = db.Categories.Where(a => a.Active == true).ToList();
-            var theBestProducts = db.Products.Where(a => a.Active == true && a.TheBestProduct == true).OrderBy(a => Guid.NewGuid()).Take(4).ToList();
-            var newProducts = db.Products.Where(a => a.Active == true).OrderByDescending(a => a.AddDate).OrderByDescending(a => a.AddDate).Take(4).ToList();
-            var promotions = db.Products.Where(a => a.Active == true && a.Promotion == true).OrderBy(a => Guid.NewGuid()).Take(4).ToList();
 
-            foreach (var item in theBestProducts)
+            if (cache.CheckSet(CacheNamespace.ListCategory))
             {
-                item.Description = item.Description.Substring(0, 80) + "[...]";
-                if (item.ProductTitle.Length >= 24)
-                {
-                    item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
-                }
-            }
 
-            foreach (var item in promotions)
-            {
-                item.Description = item.Description.Substring(0, 80) + "[...]";
-                if (item.ProductTitle.Length >= 24)
-                {
-                    item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
-                }
+                ListCategory = cache.Get(CacheNamespace.ListCategory) as List<Category>;
             }
+            else
+            {
+                ListCategory = db.Categories.Where(a => a.Active == true).ToList();
+                cache.Set(CacheNamespace.ListCategory, ListCategory, 3600);
+            }
+            var categories = ListCategory;
 
-            foreach (var item in newProducts)
+            if (cache.CheckSet(CacheNamespace.BestProduct))
             {
-                item.Description = item.Description.Substring(0, 80) + "[...]";
-                if (item.ProductTitle.Length >= 24)
-                {
-                    item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
-                }
+                ListProduct = cache.Get(CacheNamespace.BestProduct) as List<Product>;
+                ListProduct = ListProduct.OrderBy(a => Guid.NewGuid()).ToList();
             }
+            else
+            {
+                ListProduct = db.Products.Where(a => a.Active == true && a.TheBestProduct == true).OrderBy(a => Guid.NewGuid()).ToList();
+
+                foreach (var item in ListProduct)
+                {
+                    if (item.Description.Length >= 80)
+                    {
+                        item.Description = item.Description.Substring(0, 80) + "[...]";
+                    }
+                    if (item.ProductTitle.Length >= 24)
+                    {
+                        item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
+                    }
+                }
+                cache.Set(CacheNamespace.BestProduct, ListProduct, 3600);
+            }
+            var theBestProducts = ListProduct.Take(4);
+
+
+            if (cache.CheckSet(CacheNamespace.NewProductFourActiveRecords))
+            {
+                ListProduct = cache.Get(CacheNamespace.NewProductFourActiveRecords) as List<Product>;
+                ListProduct = ListProduct.OrderBy(a => Guid.NewGuid()).ToList();     
+            }
+            else
+            {
+                ListProduct = db.Products.Where(a => a.Active == true).OrderBy(a=> Guid.NewGuid()).Take(4).ToList();
+                foreach (var item in ListProduct)
+                {
+                    if (item.Description.Length >= 80)
+                    {
+                        item.Description = item.Description.Substring(0, 80) + "[...]";
+                    }
+                    if (item.ProductTitle.Length >= 24)
+                    {
+                        item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
+                    }
+                }
+                cache.Set(CacheNamespace.NewProductFourActiveRecords, ListProduct, 3600);
+            }
+            var newProducts = ListProduct;
+
+            if (cache.CheckSet(CacheNamespace.ProductsPromotions))
+            {
+                ListProduct = cache.Get(CacheNamespace.ProductsPromotions) as List<Product>;
+                ListProduct = ListProduct.OrderBy(a => Guid.NewGuid()).ToList();
+            }
+            else
+            {
+                ListProduct = db.Products.Where(a => a.Active == true && a.Promotion == true).OrderBy(a => Guid.NewGuid()).ToList();
+                foreach (var item in ListProduct)
+                {
+                    if (item.Description.Length >= 80)
+                    {
+                        item.Description = item.Description.Substring(0, 80) + "[...]";
+                    }
+                    if (item.ProductTitle.Length >= 24)
+                    {
+                        item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
+                    }
+                }
+                cache.Set(CacheNamespace.ProductsPromotions, ListProduct, 3600);
+            }
+            var promotions = ListProduct.Take(4);
+
 
             var mergeViewModel = new HomeViewModel
             {

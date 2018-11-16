@@ -8,7 +8,7 @@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @System.Web.Optimization.Styles.Render("~/Content/themes/base/css")
 
 </head>
 <body>
@@ -60,7 +60,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="fa fa-shopping-cart">
-                            <span class="badge badge-danger">0</span>
+                            <span class="badge badge-danger">@Html.Action("GetCartItemsCount", "ShoppingCart")</span>
                         </i>
                         Koszyk
                     </a>

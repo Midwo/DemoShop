@@ -5,9 +5,77 @@
 }
 
 @Html.Action("CategoryList")
+<section class="bg-white">
+    <div class="row container_content">
+        <div class="col-12 text-center"> @Html.MvcSiteMap().SiteMapPath()</div>
+    </div>
+</section>
+
+<section class="bg-white">
+    <div class="row container_content">
+        <form id="search-form" method="get" data-ajax-target="#productlist">
+            <input id="search-filter" type="search" name="searchQuery"
+                   data-autocomplete-source="@Url.Action("ProductAutocomplete")"
+                   placeholder="Wprowadź nazwę" />
+            <button type="submit" class="btn btn-dark">Szukaj</button>
+        </form>
+    </div>
+</section>
+
 
 
 @Html.Partial("_ProductList")
 
 
 <hr />
+
+@section scripts{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+
+    <script>
+        $(function () {
+
+            var ajaxSubmit = function () {
+
+                var $form = $(this);
+
+                var settings = {
+                    data: $(this).serialize(),
+                    url: $(this).attr("action"),
+                    type: $(this).attr("method")
+                };
+
+                $.ajax(settings).done(function (result) {
+                    var $targetElement = $($form.data("ajax-target"));
+                    var $newContent = $(result);
+                    $($targetElement).replaceWith($newContent);
+                });
+
+                return false;
+            };
+
+
+            var setupAutoComplete = function () {
+                var $input = $(this);
+
+                var options = {
+                    source: $input.attr("data-autocomplete-source"),
+                    select: function (event, ui) {
+                        $input = $(this);
+                        $input.val(ui.item.label);
+                        var $form = $input.parents("form:first");
+                        $form.submit();
+                    }
+                };
+
+                $input.autocomplete(options);
+            };
+
+            $("#search-form").submit(ajaxSubmit);
+            $("#search-filter").each(setupAutoComplete);
+
+        });
+
+    </script>
+
+}

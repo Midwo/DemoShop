@@ -20,6 +20,13 @@ namespace DemoShop
                 );
 
             routes.MapRoute(
+             name: "CartShop",
+             url: "Koszyk/{id}",
+             defaults: new { controller = "ShoppingCart", action = "AddToShoppingCart" }
+             );
+
+
+            routes.MapRoute(
                 name: "BusinessInformation",
                 url: "informacje/{viewname}",
                 defaults: new { controller = "Home", action = "ViewWithInformation" }
@@ -28,10 +35,11 @@ namespace DemoShop
             routes.MapRoute(
                 name: "CategoryList",
                 url: "kategorie/{categoryname}",
-                defaults: new {controller = "Store", action = "CategoryList" },
+                defaults: new {controller = "Store", action = "ProductList" },
                 constraints: new { categoryname = @"[\w ]+" }
                 );
-            
+
+           
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

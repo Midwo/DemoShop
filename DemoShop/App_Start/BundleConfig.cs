@@ -10,7 +10,8 @@ namespace DemoShop
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-{version}.min.js"));
+                        "~/Scripts/jquery-{version}.min.js",
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -34,6 +35,14 @@ namespace DemoShop
                       "~/Content/font-awesome.css",
                       "~/Scripts/slick/slick.css",
                       "~/Scripts/slick/slick-theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+                       "~/Content/themes/base/core.css",
+                       "~/Content/themes/base/autocomplete.css",
+                       "~/Content/themes/base/theme.css",
+                       "~/Content/themes/base/menu.css",
+                       "~/Content/themes/base/jquery-ui.css"
+                       ));
 
         }
     }

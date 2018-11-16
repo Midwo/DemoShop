@@ -52,6 +52,8 @@ namespace DemoShop.Models
 
         public decimal SummaryPrice { get; set; }
 
+        public decimal SummaWeight { get; set; }
+
         public State State { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
     }
