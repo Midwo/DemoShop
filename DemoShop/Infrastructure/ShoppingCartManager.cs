@@ -75,6 +75,7 @@ namespace DemoShop.Infrastructure
                 {
                     cartItem.Quantity--;
                     cartItem.WeightProducts -= cart.Where(a => a.Product.ProductID == productID).Select(i => i.WeightProducts).Single();
+                    return cartItem.Quantity;
                 }
                 else
                 {

@@ -1,0 +1,141 @@
+﻿@model DemoShop.ViewModels.CartViewModel
+@using DemoShop.Infrastructure
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Action("CategoryList", "Store")
+<section class="bg-white">
+    <div class="row container_content">
+        <div class="col-12 text-center"> @Html.MvcSiteMap().SiteMapPath()</div>
+    </div>
+</section>
+
+
+<div class="jumbotron-fluid" style="margin-top: 20px; margin-bottom: 20px;">
+
+    @foreach (var item in Model.CartDatas)
+    {
+        <hr id="cart-hr1-@item.Product.ProductID" />
+        <div class="container" id="cart-row-@item.Product.ProductID">
+            <div class="row divmarginauto">
+                <div class="col-lg-2 text-center">
+                    <a href="@Url.Action("Details", "Store", new { id = item.Product.ProductID})">
+                        <img class="img-cart" src="@Url.Products(item.Product.FileNamePhoto)">
+                    </a>
+                </div>
+
+                <div class="col-lg-4 text-center divmarginauto">
+                    <h6>@item.Product.ProductTitle</h6>
+                </div>
+
+                <div class="col-lg-2 text-center divmarginauto">
+                    <h6>Cena jednostkowa: @item.Product.Price</h6>
+                </div>
+                <div class="col-lg-2 text-center divmarginauto">
+                    <h6>Ilość: <span id="cart-item-count-@item.Product.ProductID">@item.Quantity</span></h6>
+                </div>
+                <div class="col-lg-2 text-center divmarginauto">
+                    <h6><a href="#" class="removeProduct" data-id="@item.Product.ProductID">Usuń</a></h6>
+                </div>
+            </div>
+
+
+        </div>
+        <hr id="cart-hr2-@item.Product.ProductID" />
+    }
+    @if (!Model.CartDatas.Any())
+    {
+        <div id="empty-cart" class="text-center" style="display: inline;">
+            <h4>Koszyk pusty, możesz śmiało kupować ; )</h4>
+        </div>
+    }
+    else
+    {
+        <div id="empty-cart" class="text-center" style="display: none;">
+            <h4>Koszyk pusty, możesz śmiało kupować ; )</h4>
+        </div>
+    }
+
+    <div class="row container_content" style="margin-bottom: 20px;">
+        @if (Model.CartDatas.Any())
+        {
+            <div id="summaryPrice-div" class="offset-md-9 col-md-3 offset-sm-7 col-sm-4 text-center" style="font-size: 25px; margin-bottom: 20px;visibility:visible;">
+                Razem: <span class="text-right" id="summaryPrice-value"> @Model.TotalPrice </span> zł
+            </div>
+        }
+        else
+        {
+            <div id="summaryPrice-div" class="offset-md-9 col-md-3 offset-sm-7 col-sm-4 text-center" style="font-size: 25px; margin-bottom: 20px; visibility:hidden;">
+                Razem: <span class="text-right" id="summaryPrice-value"> @Model.TotalPrice </span> zł
+            </div>
+        }
+
+
+        <a href="@Url.Action("Index","Home")" class="offset-md-9 col-md-3 offset-sm-7 col-sm-4 btn btn-info btn-lg btn-block">Kontynuuj zakupy</a>
+        @if (Model.CartDatas.Any())
+        {
+            <div class="col-12"></div>
+            <a href="@Url.Action("PaidCart","ShoppingCart")" class="offset-md-9 col-md-3 offset-sm-7 col-sm-4 btn btn-warning btn-lg btn-block" id="cart-paid">
+                Zapłać
+            </a>
+        }
+
+    </div>
+</div>
+
+
+@section scripts{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+
+    <script type="text/javascript">
+        $(function () {
+            $(".removeProduct").click(function () {
+
+                var productToDeleteID = $(this).attr("data-id");
+
+                if (productToDeleteID != '') {
+
+                    // Send post request with AJAX
+                    $.post("/ShoppingCart/RemoveFromCart", { "ProductID": productToDeleteID },
+                        function (response) {
+                            // Success
+                            if (response.RemovedItemCount == 0) {
+
+                                $('#cart-row-' + response.RemoveItemId).fadeOut('slow', function () {
+                                    if (response.ActualItemsCount == 0) {
+                                        $("#empty-cart").css({ 'display': 'inline' });
+                                    }
+                                });
+                                $('#cart-hr1-' + response.RemoveItemId).fadeOut('slow');
+                                $('#cart-hr2-' + response.RemoveItemId).fadeOut('slow');
+
+                            } else {
+                                $('#cart-item-count-' + response.RemoveItemId).text(response.RemovedItemCount);
+                            }
+
+                            if (response.ActualItemsCount == 0) {
+                                $('#cart-paid').css({ 'visibility': 'hidden' });
+                                $('#summaryPrice-div').css({ 'visibility': 'hidden' });
+                            }
+
+                            $('#summaryPrice-value').text(response.TotalCost);
+                            $('#cartQuantity-in-nav-menu').text(response.ActualItemsCount);
+
+                        });
+
+                    return false;
+                }
+            });
+
+        });
+
+    </script>
+}
+
+
+
+
+

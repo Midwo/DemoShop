@@ -726,3 +726,9 @@ footer {
 }
 
 
+/*cart css style*/
+.img-cart {
+    height: 150px;
+    width: 150px;
+    border-radius: 30px;
+}

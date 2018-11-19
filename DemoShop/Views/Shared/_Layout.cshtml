@@ -58,9 +58,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="@Url.Action("Index","ShoppingCart")">
                         <i class="fa fa-shopping-cart">
-                            <span class="badge badge-danger">@Html.Action("GetCartItemsCount", "ShoppingCart")</span>
+                            <span class="badge badge-danger" id="cartQuantity-in-nav-menu">@Html.Action("GetCartItemsCount", "ShoppingCart")</span>
                         </i>
                         Koszyk
                     </a>

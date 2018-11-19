@@ -1,5 +1,6 @@
 ﻿using DemoShop.DAL;
 using DemoShop.Infrastructure;
+using DemoShop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,12 @@ namespace DemoShop.Controllers
          
         public ActionResult Index()
         {
-            return View();
+            var cartDatas = shoppingCartManager.GetCart();
+            var totalPrice = shoppingCartManager.GetCartTotalPrice();
+
+            CartViewModel cartViewModel = new CartViewModel() { CartDatas = cartDatas, TotalPrice = totalPrice };
+
+            return View(cartViewModel);
         }
 
 
@@ -38,6 +44,24 @@ namespace DemoShop.Controllers
         public int GetCartItemsCount()
         {
             return shoppingCartManager.GetCartItemsCount();
+        }
+
+
+        public ActionResult RemoveFromCart(int ProductID)
+        {
+            int itemCount = shoppingCartManager.RemoveFromCart(ProductID);
+            int actualItemsCount = shoppingCartManager.GetCartItemsCount();
+            decimal totalCost = shoppingCartManager.GetCartTotalPrice();
+
+            var result = new CartRemoveViewModel
+            {
+                ActualItemsCount = actualItemsCount,
+                TotalCost = totalCost,
+                RemoveItemId = ProductID,
+                RemovedItemCount = itemCount
+            };
+
+            return Json(result);
         }
     }
 }

@@ -7,5 +7,7 @@
     <mvcSiteMapNode title="Category" controller="Store" action="ProductList" dynamicNodeProvider="DemoShop.Infrastructure.DetailCategoryDynamicNodeProvider, DemoShop">
       <mvcSiteMapNode title="Product" controller="Store" action="Details" dynamicNodeProvider="DemoShop.Infrastructure.DetailProductDynamicNodeProvider, DemoShop"/>
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Twój koszyk" controller="ShoppingCart" action="Index">
+    </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>
