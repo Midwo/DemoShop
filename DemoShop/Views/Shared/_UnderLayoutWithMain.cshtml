@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Action("CategoryList", "Store")
+<section class="bg-white">
+    <div class="row container_content">
+        <div class="col-12 text-center"> @Html.MvcSiteMap().SiteMapPath()</div>
+    </div>
+</section>
+
+
+@RenderBody()
+
+<hr />
+
+
+@section scripts{
+
+    @RenderSection("scripts", required: false)
+
+}
+
+
+
+
+

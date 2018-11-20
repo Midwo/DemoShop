@@ -9,5 +9,9 @@
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Twój koszyk" controller="ShoppingCart" action="Index">
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Konto" controller="Account" action="Index">
+      <mvcSiteMapNode title="Logowanie" controller="Account" action="Login">
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

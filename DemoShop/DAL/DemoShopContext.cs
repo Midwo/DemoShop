@@ -12,7 +12,7 @@ namespace DemoShop.DAL
 
         public DemoShopContext() : base("DemoShopContext")
         {
-
+         
         }
 
         static DemoShopContext()
