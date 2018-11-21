@@ -732,3 +732,9 @@ footer {
     width: 150px;
     border-radius: 30px;
 }
+
+/*Login view*/
+
+.TextBoxForLogin {
+    width: 270px;
+}

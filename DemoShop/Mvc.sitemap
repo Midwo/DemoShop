@@ -12,6 +12,8 @@
     <mvcSiteMapNode title="Konto" controller="Account" action="Index">
       <mvcSiteMapNode title="Logowanie" controller="Account" action="Login">
       </mvcSiteMapNode>
+      <mvcSiteMapNode title="Rejestracja" controller="Account" action="Register">
+      </mvcSiteMapNode>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>
