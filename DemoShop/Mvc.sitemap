@@ -15,5 +15,9 @@
       <mvcSiteMapNode title="Rejestracja" controller="Account" action="Register">
       </mvcSiteMapNode>
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Konto" controller="Manage" action="Index">
+      <mvcSiteMapNode title="Adres dostarczania" controller="Manage" action="ProfileAddress">
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

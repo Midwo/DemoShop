@@ -5,6 +5,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
+using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -57,16 +59,20 @@ namespace DemoShop
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            var facebookData = new FacebookAuthenticationOptions()
+            {
+                  AppId = "1987270991571587",
+                  AppSecret = "4004d5fce64a54478d38ff31484b3dea"
+            };
+            facebookData.Scope.Add("email");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(facebookData);
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+               ClientId = "677461325351-a2oh1vfu3gbthh8ggm2gcc0kklvq73gd.apps.googleusercontent.com",
+               ClientSecret = "CrPoWcBnsc-sSgGmJRerwjM5"
+            });
         }
     }
 }

@@ -38,6 +38,12 @@ namespace DemoShop.Infrastructure
             return absolutePath;
         }
 
+        public static string Icons(this UrlHelper helper, string namePhoto)
+        {
+            var path = Path.Combine("~/Content/Icon/", namePhoto);
+            var absolutePath = helper.Content(path);
+            return absolutePath;
+        }
         public static string About(this UrlHelper helper, string namePhoto)
         {
             var path = Path.Combine("~/Content/About/", namePhoto);

@@ -149,6 +149,7 @@ textarea {
     width: 200px;
     height: 200px;
 }
+
 .img-fluid-ver2 {
     border-radius: 30px;
 }
@@ -160,12 +161,14 @@ textarea {
     margin-top: 20px;
     position: relative;
 }
-.item-product-details{
+
+.item-product-details {
     padding: 15px;
     background: #fff;
     margin-top: 20px;
     position: relative;
 }
+
 .item-product:hover {
     -webkit-box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.55);
     -moz-box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.55);
@@ -274,6 +277,7 @@ textarea {
     line-height: 1.4;
     font-size: 15px;
 }
+
 .item-product .btn:hover {
     background: rgba(47, 156, 220, 0.84);
     border-color: #c8c8c8;
@@ -284,29 +288,35 @@ textarea {
     font-weight: 700;
     padding-bottom: 4px;
 }
+
 .item-product-details h3 {
     font-size: 16px;
     font-weight: 700;
     padding-bottom: 4px;
 }
+
 .item-product h3 a {
     color: #3e4d5c;
     text-decoration: none;
 }
+
 .item-product-details h3 a {
     color: #3e4d5c;
     text-decoration: none;
 }
+
 .item-product h4 {
     font-size: 16px;
     font-weight: 300;
     padding-bottom: 4px;
 }
+
 .item-product-details h4 {
     font-size: 16px;
     font-weight: 300;
     padding-bottom: 4px;
 }
+
 .item-product h4 a {
     color: #3e4d5c;
     text-decoration: none;
@@ -316,6 +326,7 @@ textarea {
     color: #3e4d5c;
     text-decoration: none;
 }
+
 .product-price {
     color: black;
     font-size: 18px;
@@ -329,17 +340,20 @@ textarea {
     border: 1px #ededed solid;
     padding: 3px 6px;
 }
+
 .item-product-details .add2cart {
     float: right;
     color: #a8aeb3;
     border: 1px #ededed solid;
     padding: 3px 6px;
 }
+
 .item-product .add2cart:hover {
     color: #fff;
     background: rgba(47, 156, 220, 0.84);
     border-color: rgba(47, 156, 220, 0.84);
 }
+
 .item-product-details .add2cartver2 {
     float: right;
     color: #a8aeb3;
@@ -355,6 +369,7 @@ textarea {
     background: rgba(47, 156, 220, 0.84);
     border-color: rgba(47, 156, 220, 0.84);
 }
+
 .item-product-details .add2cartver2:hover {
     color: #fff;
     background: rgba(47, 156, 220, 0.84);
@@ -366,7 +381,7 @@ textarea {
     height: 100%;
 }
 
-.divmarginauto{
+.divmarginauto {
     margin: auto;
 }
 
@@ -441,7 +456,7 @@ textarea {
 /*footer*/
 footer {
     background-color: #353c42;
-    padding-top: 20px;
+    padding-top: 22px;
     padding-bottom: 20px;
     color: white;
 }
@@ -523,7 +538,7 @@ footer {
 /*Footer options*/
 #wrapper {
     width: auto;
-    min-height: calc(100% - 205px);
+    min-height: calc(100% - 200px);
 }
 
 
@@ -719,11 +734,11 @@ footer {
     margin-right: auto;
 }
 
-#search-form input[type=search] {
-    border: none;
-    height: 18px;
-    width: 230px;
-}
+    #search-form input[type=search] {
+        border: none;
+        height: 18px;
+        width: 230px;
+    }
 
 
 /*cart css style*/
@@ -737,4 +752,111 @@ footer {
 
 .TextBoxForLogin {
     width: 270px;
+}
+
+
+/*Login with Facebook and Google design*/
+#LoginFacebookBotton {
+    background: #3B5998;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    text-decoration: none;
+    margin: 5px 2px;
+    border: none;
+    width: 100%;
+    padding: 10px 25px 10px 10px;
+}
+
+    #LoginFacebookBotton:hover {
+        opacity: 0.7;
+    }
+
+
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+    padding-right: 20px;
+    font-size: 20px;
+    padding-left: 5px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+}
+
+#LoginGoogleBotton {
+    background: #dd4b39;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    text-decoration: none;
+    margin: 5px 2px;
+    border: none;
+    padding: 10px 25px 10px 10px;
+    width: 100%;
+}
+
+    #LoginGoogleBotton:hover {
+        opacity: 0.7;
+    }
+
+
+.fa-google {
+    background: #dd4b39;
+    color: white;
+    padding-right: 20px;
+    font-size: 20px;
+    padding-left: 5px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+}
+
+
+/*Index Manage View*/
+#ManageMenuSiteMap {
+    color: white;
+    font-size: 150%;
+}
+
+
+    #ManageMenuSiteMap a {
+        color: white;
+    }
+
+.UpSiteMapIconLogin {
+    padding-top: 30px;
+}
+
+.UnderSiteMapIconLogin {
+    height: 50px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .UnderSiteMapIconLogin img {
+        border-radius: 50%;
+        background-color: white;
+    }
+
+.bg-white {
+    height: auto;
+}
+
+@media (min-width: 990px) {
+    .moreMargin {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 990px) {
+    .moreMargin {
+        margin-top: 50px;
+    }
+}
+
+.sliderManage {
+    width: 70%;
+    margin: 30px auto;
+    padding-bottom: 30px;
 }

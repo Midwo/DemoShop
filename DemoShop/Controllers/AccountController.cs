@@ -10,9 +10,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using DemoShop.Models;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace DemoShop.Controllers
 {
+    [RequireHttps]
     public class AccountController : Controller
     {
 
@@ -145,6 +147,113 @@ namespace DemoShop.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
+
+        // POST: /Account/ExternalLogin
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            // Request a redirect to the external login provider
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+        }
+
+        internal class ChallengeResult : HttpUnauthorizedResult
+        {
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
+            {
+            }
+
+            public ChallengeResult(string provider, string redirectUri, string userId)
+            {
+                LoginProvider = provider;
+                RedirectUri = redirectUri;
+                UserId = userId;
+            }
+
+            public string LoginProvider { get; set; }
+            public string RedirectUri { get; set; }
+            public string UserId { get; set; }
+
+            public override void ExecuteResult(ControllerContext context)
+            {
+                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+                if (UserId != null)
+                {
+                    properties.Dictionary[XsrfKey] = UserId;
+                }
+                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
+            }
+        }
+        // Used for XSRF protection when adding external logins
+        private const string XsrfKey = "XsrfId";
+
+        // GET: /Account/ExternalLoginCallback
+        [AllowAnonymous]
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+        {
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Sign in the user with this external login provider if the user already has a login
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                //case SignInStatus.LockedOut:
+                //    return View("Lockout");
+                //case SignInStatus.RequiresVerification:
+                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+                case SignInStatus.Failure:
+                default:
+                    // If the user does not have an account, then prompt the user to create an account
+                    var user = new ApplicationUser
+                    {
+                        UserName = loginInfo.Email,
+                        Email = loginInfo.Email,
+                        UserInformation = new UserInformation { Email = loginInfo.Email }
+                    };
+
+                    // generate password to account
+                    //  string password = Membership.GeneratePassword(12, 1);
+                    // send email with random password
+                  //  var resultNewUser = await UserManager.CreateAsync(user, password);
+                    var resultNewUser = await UserManager.CreateAsync(user);
+                    if (resultNewUser.Succeeded)
+                    {
+                        resultNewUser = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                        if (resultNewUser.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            throw new Exception("Błąd providera w rejestracji");
+                        }
+                    }
+                    else
+                    {
+                        var findedUser = await UserManager.FindByNameAsync(loginInfo.Email);
+                        resultNewUser = await UserManager.AddLoginAsync(findedUser.Id, loginInfo.Login);
+                        if (resultNewUser.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(findedUser, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            throw new Exception("Błąd providera w rejestracji");
+                        }
+                    }
+            }
+        }
+
 
 
     }

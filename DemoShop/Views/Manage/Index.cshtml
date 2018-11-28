@@ -1,0 +1,118 @@
+﻿
+@using DemoShop.Infrastructure
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Change Password Form</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Change password" class="btn btn-default" />
+            </div>
+        </div>
+    }*@
+
+<section class="bg-info">
+    <div class="row container_content">
+        <div class="col-12 text-center UpSiteMapIconLogin"> <spam id="ManageMenuSiteMap">@Html.MvcSiteMap().SiteMapPath()</spam></div>
+        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-male-user-filled-100.png")" /></div>
+    </div>
+</section>
+<section class="bg-white moreMargin">
+
+    <div class="row container_content">
+
+        <div class="col-md-6 col-12 col-sm-12">
+            <h2 class="text-center">Zarządzanie kontem: </h2>
+            <a href="@Url.Action("ProfileAddress","Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Adres dostarczenia</span></a>
+            <a  class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Dodatkowe opcje logowania</span></a>
+            <a  class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Zmiana hasła</span></a>
+
+        </div>
+        <div class="col-md-6 col-12 col-sm-12">
+            <h2 class="text-center">Historia, statusy:</h2>
+            <a class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Historia zamówień</span></a>
+            <a class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Oczekujące zamówienia</span></a>
+            <a class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wysłane zamówienia</span></a>
+            <a class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Anulowane zamówienia</span></a>
+        </div>
+
+
+    </div>
+
+</section>
+<h1 class="text-center" style="margin-top:20px;"> Informacje:</h1>
+<section class="regular sliderManage container">
+    <div class="text-center" style="border: solid;">
+        <h1>Uwaga: jest to tylko strona demonstracyjna</h1>
+        <h2>Nie ma możliwości otrzymania produktów po zamówieniu ani zwrotu środków</h2>
+    </div>
+    <div class="text-center" style="border: solid;">
+        <h1>Uwaga: występują poziomy uprawnień</h1>
+        <h2>Zapraszam do zalogowania na Administratora i przetestowania funkcjonalności</h2>
+    </div>
+</section>
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".regular").slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }]
+            });
+        });
+    </script>
+}
