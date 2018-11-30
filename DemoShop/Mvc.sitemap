@@ -18,6 +18,12 @@
     <mvcSiteMapNode title="Konto" controller="Manage" action="Index">
       <mvcSiteMapNode title="Adres dostarczania" controller="Manage" action="ProfileAddress">
       </mvcSiteMapNode>
+      <mvcSiteMapNode title="Inne sposoby logowania" controller="Manage" action="OtherLogIn">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Zmiana hasła" controller="Manage" action="ChangePassword">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Ustawienie hasła" controller="Manage" action="SetPassword">
+      </mvcSiteMapNode>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

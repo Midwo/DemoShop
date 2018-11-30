@@ -260,6 +260,7 @@
     <Compile Include="ViewModels\CartRemoveViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\About\pexels-photo-145465.jpeg" />
@@ -284,9 +285,12 @@
     <Content Include="Content\IconsMenuProduct\icons8-school-30.png" />
     <Content Include="Content\IconsMenuProduct\icons8-select-all-30.png" />
     <Content Include="Content\IconsMenuProduct\icons8-video-camera-30.png" />
+    <Content Include="Content\Icon\icons8-encrypt-100.png" />
     <Content Include="Content\Icon\icons8-globe-100.png" />
     <Content Include="Content\Icon\icons8-location-100.png" />
     <Content Include="Content\Icon\icons8-male-user-filled-100.png" />
+    <Content Include="Content\Icon\icons8-password-100.png" />
+    <Content Include="Content\Icon\icons8-signin-100.png" />
     <Content Include="Content\Icon\icons8-user-50.png" />
     <Content Include="Content\overlay\bestseller-icon.png" />
     <Content Include="Content\overlay\new-icon.png" />
@@ -502,6 +506,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ProfileAddress.cshtml" />
+    <Content Include="Views\Manage\OtherLogIn.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
