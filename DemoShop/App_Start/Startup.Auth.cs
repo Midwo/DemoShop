@@ -61,8 +61,8 @@ namespace DemoShop
             //   consumerSecret: "");
             var facebookData = new FacebookAuthenticationOptions()
             {
-                  AppId = "1987270991571587",
-                  AppSecret = "4004d5fce64a54478d38ff31484b3dea"
+                  AppId = "fbid",
+                  AppSecret = "fbsecretpass"
             };
             facebookData.Scope.Add("email");
 
@@ -70,9 +70,10 @@ namespace DemoShop
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-               ClientId = "677461325351-a2oh1vfu3gbthh8ggm2gcc0kklvq73gd.apps.googleusercontent.com",
-               ClientSecret = "CrPoWcBnsc-sSgGmJRerwjM5"
+               ClientId = "googleID.apps.googleusercontent.com",
+               ClientSecret = "secretgooglepass"
             });
+
         }
     }
 }

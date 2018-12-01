@@ -1,9 +1,14 @@
-﻿using DemoShop.DAL;
+﻿using DemoShop.App_Start;
+using DemoShop.DAL;
 using DemoShop.Infrastructure;
+using DemoShop.Models;
 using DemoShop.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -63,5 +68,80 @@ namespace DemoShop.Controllers
 
             return Json(result);
         }
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        //get
+        public async Task<ActionResult> PaidCart()
+        {
+            if (Request.IsAuthenticated)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+                var order = new Order
+                {
+                    Name = user.UserInformation.Name,
+                    ApartmentNumber = user.UserInformation.ApartmentNumber,
+                    City = user.UserInformation.City,
+                    CityCode = user.UserInformation.CityCode,
+                    Country = user.UserInformation.Country,
+                    Email = user.UserInformation.Email,
+                    Phone = user.UserInformation.Phone,
+                    Street = user.UserInformation.Street,
+                    Surname = user.UserInformation.Surname
+                };
+                return View(order);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("PaidCart", "ShoppingCart")});
+            }
+        }
+       // post
+        [HttpPost]
+        public async Task<ActionResult> PaidCart(Order orderInformation)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+
+                var newOrder = shoppingCartManager.CreateOrder(orderInformation, userId);
+
+                var user = await UserManager.FindByIdAsync(userId);
+
+                TryUpdateModel(user.UserInformation);
+
+                await UserManager.UpdateAsync(user);
+
+                shoppingCartManager.ClearCart();
+
+                return RedirectToAction("OrderConfirmation");
+
+            }
+            else
+            {
+                return View(orderInformation);
+            }
+        
+
+        }
+
+
+        public ActionResult OrderConfirmation()
+        {
+            return View();
+        }
+
+
     }
 }

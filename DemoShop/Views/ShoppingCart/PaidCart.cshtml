@@ -1,0 +1,112 @@
+﻿@model DemoShop.Models.Order
+@using DemoShop.Models
+@{
+    ViewBag.Title = "PaidCart";
+    Layout = "~/Views/Shared/_UnderLayoutWithMain.cshtml";
+}
+
+<div class="row container_content">
+
+    <div class="col-md-12 col-12 col-sm-12">
+        @using (@Html.BeginForm("PaidCart", "ShoppingCart"))
+        {
+            @Html.AntiForgeryToken()
+
+            <h4>Ustawienie adresu dostawy produktów</h4>
+            <hr />
+
+
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Country, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.DropDownListFor(m => m.Country, new SelectList(Enum.GetValues(typeof(Country))), new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.City, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(m => m.CityCode, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.CityCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CityCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Street, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.Street, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Street, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(m => m.ApartmentNumber, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.ApartmentNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ApartmentNumber, "", new { @class = "text-danger" })
+                </div>
+            </div> <div class="form-group row">
+                @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                <div class="col-md-10 col-sm-8 col-8">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <h4 class="col-md-2 col-sm-4 col-4 col-form-label text-right">Uwagi</h4>
+                <div class="col-md-10 col-sm-8 col-8">
+                    <textarea cols="180" rows="5" name="comment">@Model.Comment</textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="offset-md-2 offset-sm-4 offset-4 col-8 col-sm-8 col-md-10">
+                    <a class="btn btn-danger" href="@Url.Action("index","ShoppingCart")" style="width: 138px;">Wróć</a>
+
+                    <input type="submit" class="btn btn-dark" value="Potwierdź" style="width: 138px;" />
+
+                </div>
+            </div>
+            @*<div class="form-group row">
+                <div class="offset-md-2 offset-sm-4 offset-4 col-8 col-sm-8 col-md-10">
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        }
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

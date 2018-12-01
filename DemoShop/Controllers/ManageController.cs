@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace DemoShop.Controllers
 {
+    [Authorize]
     public class ManageController : Controller
     {
        

@@ -246,6 +246,14 @@
     <Compile Include="Migrations\201811240140351_EditNewFieldWithUserInformation.Designer.cs">
       <DependentUpon>201811240140351_EditNewFieldWithUserInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812010204311_NewColumnInOrder.cs" />
+    <Compile Include="Migrations\201812010204311_NewColumnInOrder.Designer.cs">
+      <DependentUpon>201812010204311_NewColumnInOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812010218318_DeclareDatetime2.cs" />
+    <Compile Include="Migrations\201812010218318_DeclareDatetime2.Designer.cs">
+      <DependentUpon>201812010218318_DeclareDatetime2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CartData.cs" />
     <Compile Include="Models\Category.cs" />
@@ -509,6 +517,8 @@
     <Content Include="Views\Manage\OtherLogIn.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\ShoppingCart\PaidCart.cshtml" />
+    <Content Include="Views\ShoppingCart\OrderConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -542,6 +552,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811240140351_EditNewFieldWithUserInformation.resx">
       <DependentUpon>201811240140351_EditNewFieldWithUserInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812010204311_NewColumnInOrder.resx">
+      <DependentUpon>201812010204311_NewColumnInOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812010218318_DeclareDatetime2.resx">
+      <DependentUpon>201812010218318_DeclareDatetime2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
