@@ -1,4 +1,5 @@
 ﻿using DemoShop.App_Start;
+using DemoShop.DAL;
 using DemoShop.Models;
 using DemoShop.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -6,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,7 +18,7 @@ namespace DemoShop.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-       
+        private DemoShopContext db = new DemoShopContext();
         public async Task<ActionResult> ProfileAddress(ManageMessageId? message)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -282,6 +284,24 @@ namespace DemoShop.Controllers
             return false;
         }
 
+        // All 
+        public ActionResult ViewOfOrderHistory()
+        {
+            var userId = User.Identity.GetUserId();
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Where(p => p.UserId == userId).Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            return View(userOrders);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        public ActionResult AdminViewOfOrder()
+        {
+            //bool isAdmin = User.IsInRole("Admin");
+
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            return View(userOrders);
+        }
 
     }
 }

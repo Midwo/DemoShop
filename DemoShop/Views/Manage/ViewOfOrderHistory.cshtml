@@ -1,0 +1,113 @@
+﻿@using DemoShop.Infrastructure
+@model IEnumerable<DemoShop.Models.Order>
+
+@{
+    ViewBag.Title = "ViewOfOrderHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-info">
+    <div class="row container_content">
+        <div class="col-12 text-center UpSiteMapIconLogin"> <spam id="ManageMenuSiteMap">@Html.MvcSiteMap().SiteMapPath()</spam></div>
+        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-time-machine-100.png")" /></div>
+    </div>
+</section>
+
+<section class="bg-white moreMargin">
+
+    <p class="text-success">
+
+        <div class="row container_content">
+            @if (Model.Any())
+            {
+                var x = Model.Count();
+                int sum = 0;
+                foreach (var Order in Model)
+                {
+                    <div class="table-responsive" style="margin-top: 40px;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nr. Zamówienia: @(x--)</th>
+                                    <th>Data zamównienia:</th>
+                                    <th>Cena:</th>
+                                    <th>Podany adres:</th>
+                                    <th>Ilość produktów:</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>@Order.DateCreated</td>
+                                    <td>@Order.SummaryPrice</td>
+                                    <td>@Order.Country, @Order.City @Order.CityCode, @Order.Street @Order.ApartmentNumber</td>
+                                    <td>
+                                        @{ sum = 0;}
+                                        @foreach (var item in Order.OrderItems)
+                                        {
+
+                                            sum += item.Quantity;
+                                        }
+                                        @sum
+                                    </td>
+                                    <td>@Order.State</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h6>Uwagi klienta: <span style="background-color:red;">@Order.Comment</span></h6>
+                        <h6>Kontakt e-mail: @Order.Email</h6>
+                        <h6>Kontakt telefon: @Order.Phone</h6>
+
+                    </div>
+
+                    <div class="table-responsive" style="margin-top: 40px; margin-left: 60px;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Zdjęcie produktu</th>
+                                    <th>Nazwa</th>
+                                    <th>Cena za sztukę</th>
+                                    <th>Ilość</th>
+                                    <th>Łączna cena</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            @foreach (var OrderItem in Order.OrderItems)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td> <a href="@Url.Action("Details", "Store", new { id = OrderItem.Product.ProductID})"> <img class="img-cart" style="width:90px; height:90px;" src="@Url.Products(OrderItem.Product.FileNamePhoto)"></a></td>
+                                        <td>@OrderItem.Product.ProductTitle</td>
+                                        <td>@OrderItem.SinglePrice</td>
+                                        <td>@OrderItem.Quantity</td>
+                                        <td>@(OrderItem.SinglePrice * OrderItem.Quantity)</td>
+                                        <td><a class="btn btn-dark" style="width:100%;" href="@Url.Action("Details", "Store", new { id = OrderItem.Product.ProductID})">Zobacz</a></td>
+                                    </tr>
+                                </tbody>
+                            }
+
+                        </table>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <text>Nie ma nic</text>
+            }
+            <div class="col-md-6 col-12 col-sm-12">
+
+            </div>
+
+            <div class="col-md-6 col-12 col-sm-12">
+
+            </div>
+
+
+        </div>
+
+</section>

@@ -8,6 +8,8 @@
       <mvcSiteMapNode title="Product" controller="Store" action="Details" dynamicNodeProvider="DemoShop.Infrastructure.DetailProductDynamicNodeProvider, DemoShop"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Twój koszyk" controller="ShoppingCart" action="Index">
+      <mvcSiteMapNode title="Adres wysyłki" controller="ShoppingCart" action="PaidCart">
+      </mvcSiteMapNode>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Konto" controller="Account" action="Index">
       <mvcSiteMapNode title="Logowanie" controller="Account" action="Login">
@@ -23,6 +25,8 @@
       <mvcSiteMapNode title="Zmiana hasła" controller="Manage" action="ChangePassword">
       </mvcSiteMapNode>
       <mvcSiteMapNode title="Ustawienie hasła" controller="Manage" action="SetPassword">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Historia zamówień" controller="Manage" action="ViewOfOrderHistory">
       </mvcSiteMapNode>
     </mvcSiteMapNode>
   </mvcSiteMapNode>

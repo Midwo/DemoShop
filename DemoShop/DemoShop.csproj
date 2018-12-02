@@ -299,6 +299,7 @@
     <Content Include="Content\Icon\icons8-male-user-filled-100.png" />
     <Content Include="Content\Icon\icons8-password-100.png" />
     <Content Include="Content\Icon\icons8-signin-100.png" />
+    <Content Include="Content\Icon\icons8-time-machine-100.png" />
     <Content Include="Content\Icon\icons8-user-50.png" />
     <Content Include="Content\overlay\bestseller-icon.png" />
     <Content Include="Content\overlay\new-icon.png" />
@@ -519,6 +520,8 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\ShoppingCart\PaidCart.cshtml" />
     <Content Include="Views\ShoppingCart\OrderConfirmation.cshtml" />
+    <Content Include="Views\Manage\ViewOfOrderHistory.cshtml" />
+    <Content Include="Views\Manage\AdminViewOfOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
