@@ -125,6 +125,8 @@ namespace DemoShop.Controllers
 
                 shoppingCartManager.ClearCart();
 
+
+
                 return RedirectToAction("OrderConfirmation");
 
             }

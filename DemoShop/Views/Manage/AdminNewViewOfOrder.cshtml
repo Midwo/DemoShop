@@ -1,15 +1,15 @@
 ﻿@using DemoShop.Infrastructure
 @model IEnumerable<DemoShop.Models.Order>
-
 @{
-    ViewBag.Title = "ViewOfOrderHistory";
+    ViewBag.Title = "AdminNewViewOfOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <section class="bg-info">
     <div class="row container_content">
         <div class="col-12 text-center UpSiteMapIconLogin"> <spam id="ManageMenuSiteMap">@Html.MvcSiteMap().SiteMapPath()</spam></div>
-        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-time-machine-100.png")" /></div>
+        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-rocket-100.png")" /></div>
     </div>
 </section>
 
@@ -17,21 +17,21 @@
 
     <p class="text-success">
 
-        <div class="row container_content">
-            @if (Model.Any())
+
+        @if (Model.Any())
+        {
+            var x = Model.Count();
+            int sum = 0;
+            foreach (var Order in Model)
             {
-                var x = Model.Count();
-                int sum = 0;
-                foreach (var Order in Model)
-                {
+                <div class="row container_content" id="id-@x">
                     <div class="table-responsive" style="margin-top: 40px;">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Nr. Zamówienia: @(x--)</th>
                                     <th>Data zamównienia:</th>
-                                    <th>Razem:</th>
-                                    <th>Wysyłka:</th>
+                                    <th>Cena:</th>
                                     <th>Podany adres:</th>
                                     <th>Ilość produktów:</th>
                                     <th>Status</th>
@@ -41,8 +41,7 @@
                                 <tr>
                                     <td></td>
                                     <td>@Order.DateCreated</td>
-                                    <td>@Order.SummaryPrice zł</td>
-                                    <td>@Order.ShippingCost zł</td>
+                                    <td>@Order.SummaryPrice</td>
                                     <td>@Order.Country, @Order.City @Order.CityCode, @Order.Street @Order.ApartmentNumber</td>
                                     <td>
                                         @{ sum = 0;}
@@ -53,7 +52,13 @@
                                         }
                                         @sum
                                     </td>
-                                    <td>@Html.DisplayFor(a => Order.State)</td>
+                                    <td>
+                                        @using (Html.BeginForm("ChangeOrderState", "Manage"))
+                                        {
+                                            @Html.HiddenFor(o => Order.OrderID)
+                                            @Html.EnumDropDownListFor(o => Order.State, new { @class = "orderstatechange", data_id = @x + 1 })
+                                        }
+                                    </td>
 
                                 </tr>
                             </tbody>
@@ -93,22 +98,51 @@
                             }
 
                         </table>
-
                     </div>
-                }
-            }
-            else
-            {
-                <div class="col-md-12 col-12 col-sm-12" style="margin-top: 50px; text-align: center;">
-                    <h1>Nie ma żadnych zamówień</h1>
                 </div>
             }
+        }
+        else
+        {
+            <div class="col-md-12 col-12 col-sm-12" style="margin-top: 50px; text-align: center;">
+                <h1>Nie ma żadnych zamówień</h1>
+            </div>
        
+        }
 
 
-        </div>
+
+
+
+
 
 </section>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(".orderstatechange").on('change', function (e) {
+            var data_id = $(this).attr("data-id");
+            var nameWithData_id = "id-" + data_id;
+
+            var objectForm = $(this.form);       
+            var action = objectForm.attr("action");
+            var serializedForm = objectForm.serialize();
+            //alert(action);
+            //alert(serializedForm);
+              $.post(action, serializedForm).done(function (data) {
+            @*if (data == '@DemoShop.Models.State.New.ToString()') {
+                
+            }*@
+            //else {
+              
+            //}        
+          });
+
+            $("#" + nameWithData_id).hide(1500);
+
+        });
+    </script>
 }
+

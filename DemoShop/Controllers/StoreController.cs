@@ -26,6 +26,13 @@ namespace DemoShop.Controllers
             return View(Product);
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminDetails(int id)
+        {
+            //var Product = db.Products.Find(id);
+            var Product = db.Products.Where(a => a.ProductID == id).Where(a => a.Active == false).Single();
+            return View("Details", Product);
+        }
         public ActionResult ProductList(string categoryname, string searchQuery = null)
         {
             TempData["SelectCategory"] = categoryname;

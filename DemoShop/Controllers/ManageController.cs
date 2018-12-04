@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -43,11 +44,29 @@ namespace DemoShop.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? "Hasło zostało ustawione"
                 : message == ManageMessageId.Error ? "Błąd - nie wykonano operacji"
                 : "";
-            var model = new OtherLogInViewModel
+
+            var model = new OtherLogInViewModel();
+            if (User.Identity.Name == "klient@mdwojak.pl")
             {
-                HasPassword = HasPassword()
-            };
-         
+                model = new OtherLogInViewModel
+                {
+                    HasPassword = HasPassword(),
+                    isAdmin = User.IsInRole("Admin"),
+                    isUserClient = true
+
+                };
+            }
+            else
+            {
+                model = new OtherLogInViewModel
+                {
+                    HasPassword = HasPassword(),
+                    isAdmin = User.IsInRole("Admin"),
+                    isUserClient = false
+                };
+            }
+
+
             return View(model);
         }
         public async Task<ActionResult> OtherLogIn()
@@ -208,6 +227,10 @@ namespace DemoShop.Controllers
             {
                 return View(model);
             }
+            if (User.Identity.Name == "admin@mdwojak.pl" || User.Identity.Name == "klient@mdwojak.pl")
+            {
+                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+            }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
@@ -289,19 +312,203 @@ namespace DemoShop.Controllers
         {
             var userId = User.Identity.GetUserId();
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Where(p => p.UserId == userId).Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            userOrders = db.Orders.Where(p => p.UserId == userId).Include("OrderItems").OrderByDescending(a => a.DateCreated).Take(20);
             return View(userOrders);
         }
 
-        //[Authorize(Roles = "Admin")]
-        public ActionResult AdminViewOfOrder()
+        public ActionResult WaitingViewOfOrderHistory()
+        {
+            var userId = User.Identity.GetUserId();
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Where(p => p.UserId == userId).Where(a => a.State == State.New).Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            return View("ViewOfOrderHistory", userOrders);
+        }
+
+        public ActionResult ShippedViewOfOrderHistory()
+        {
+            var userId = User.Identity.GetUserId();
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Where(p => p.UserId == userId).Where(a => a.State == State.Shipped).Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            return View("ViewOfOrderHistory", userOrders);
+        }
+
+        public ActionResult CanceledViewOfOrderHistory()
+        {
+            var userId = User.Identity.GetUserId();
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Where(p => p.UserId == userId).Where(a => a.State == State.Canceled).Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            return View("ViewOfOrderHistory", userOrders);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminNewViewOfOrder()
         {
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.New).OrderBy(a => a.DateCreated).Take(100);
             return View(userOrders);
         }
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminCanceledViewOfOrder()
+        {
+            //bool isAdmin = User.IsInRole("Admin");
 
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Canceled).OrderBy(a => a.DateCreated).Take(10);
+            return View("AdminNewViewOfOrder", userOrders);
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminShippedViewOfOrder()
+        {
+            //bool isAdmin = User.IsInRole("Admin");
+
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Shipped).OrderBy(a => a.DateCreated).Take(10);
+            return View("AdminNewViewOfOrder", userOrders);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminAllViewOfOrder()
+        {
+            //bool isAdmin = User.IsInRole("Admin");
+
+            IEnumerable<Order> userOrders;
+            userOrders = db.Orders.Include("OrderItems").OrderBy(a => a.DateCreated).Take(100);
+            return View("AdminNewViewOfOrder", userOrders);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult DisabledProduct()
+        {
+            List<Product> ProductList;
+            var List = db.Products;
+          
+            
+            ProductList = List.Where(a => a.Active == false).ToList();
+            
+          
+            foreach (var item in ProductList)
+            {
+                if (item.Description.Length >= 60)
+                {
+                    item.Description = item.Description.Substring(0, 60) + "[...]";
+                }
+                if (item.ProductTitle.Length >= 24)
+                {
+                    item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
+                }
+            }
+
+            return View(ProductList);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult UpdateOrAddProduct(int? productId, bool? responseSuccess, bool? responseError)
+        {
+            Product searchData;
+            EditAddProductViewModel data = new EditAddProductViewModel();
+            if (productId.HasValue)
+            {
+                data.EditModeWithID = true;
+                searchData = db.Products.Find(productId);
+            }
+            else
+            {
+                data.EditModeWithID = false;
+                searchData = new Product();
+            }
+
+
+            data.Categories = db.Categories.ToList();
+            data.Product = searchData;
+            data.ResponseSuccess = responseSuccess;
+            data.ResponseError = responseError;
+            return View(data);
+
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult UpdateOrAddProduct(EditAddProductViewModel data, HttpPostedFileBase file)
+        {
+            if (data.Product.ProductID == 0)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        // Generate filename
+
+
+
+                        var fileExt = Path.GetExtension(file.FileName);
+                        var filename = Guid.NewGuid() + fileExt;
+
+                        var path = Path.Combine(Server.MapPath("~/Content/Products/"), filename);
+                        file.SaveAs(path);
+
+                        // Save to DB
+                        data.Product.FileNamePhoto = filename;
+                        data.Product.AddDate = DateTime.Now;
+
+                        db.Entry(data.Product).State = EntityState.Added;
+                        db.SaveChanges();
+
+                        return RedirectToAction("UpdateOrAddProduct", new { responseSuccess = true });
+                    }
+                    else
+                    {
+                        var category = db.Categories.ToArray();
+                        data.Categories = category;
+                        return View(data);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie wskazano pliku.");
+                    var category = db.Categories.ToArray();
+                    data.Categories = category;
+                    return View(data);
+                }
+            }
+            else
+            {
+                if (data.Product.Price == 0 || data.Product.Weight == 0)
+                {
+                    return RedirectToAction("UpdateOrAddProduct", new { responseError = true });
+                }
+                else
+                {
+                    db.Entry(data.Product).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("UpdateOrAddProduct", new { responseSuccess = true });
+                }
+
+            }
+
+
+
+        }
+
+
+
+        [HttpPost]
+        public State ChangeOrderState(Order order)
+        {
+            Order orderToModify = db.Orders.Find(order.OrderID);
+            orderToModify.State = order.State;
+
+            if (orderToModify.State == State.Shipped)
+            {
+                orderToModify.DateShipped = DateTime.Now;
+            }
+            else if (orderToModify.State == State.Canceled)
+            {
+
+            }
+            db.SaveChanges();
+            return order.State;
+        }
     }
 }

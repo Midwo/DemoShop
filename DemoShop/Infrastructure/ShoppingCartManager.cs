@@ -122,22 +122,29 @@ namespace DemoShop.Infrastructure
 
             decimal cartTotalPrice = 0;
             decimal cartTotalWeight = 0;
+            int Quantity = 0;
+            decimal ShippingCost = 0;
 
             foreach (var cartItem in cart)
             {
+                Quantity += cartItem.Quantity;
                 var newOrderItem = new OrderItem()
                 {
                     ProductID = cartItem.Product.ProductID,
                     Quantity = cartItem.Quantity,
-                    SinglePrice = cartItem.Product.Price
+                    SinglePrice = cartItem.Product.Price,
                 };
                 cartTotalPrice += (cartItem.Quantity * cartItem.Product.Price);
                 cartTotalWeight += (cartItem.Quantity * cartItem.Product.Weight);
 
                 newOrder.OrderItems.Add(newOrderItem);
             }
+            if (Quantity <= 2) { ShippingCost = 15.99m; }
+            else if (Quantity <= 6) { ShippingCost = 24.99m; }
+            else { ShippingCost = 25.99m; }
 
-            newOrder.SummaryPrice = cartTotalPrice;
+            newOrder.ShippingCost = ShippingCost;
+            newOrder.SummaryPrice = cartTotalPrice + ShippingCost;
             newOrder.SummaWeight = cartTotalWeight;
 
             this.db.SaveChanges();

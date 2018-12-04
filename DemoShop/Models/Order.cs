@@ -19,7 +19,7 @@ namespace DemoShop.Models
         public DateTime DateShipped { get; set; }
 
         [Display(Name = "Imię:")]
-        [Required(ErrorMessage ="Wprowadź imię")]
+        [Required(ErrorMessage = "Wprowadź imię")]
         [StringLength(30)]
         public string Name { get; set; }
 
@@ -29,28 +29,28 @@ namespace DemoShop.Models
         public string Surname { get; set; }
 
         [Display(Name = "Kraj:")]
-        [Required(ErrorMessage ="Musisz wybrać kraj")]
+        [Required(ErrorMessage = "Musisz wybrać kraj")]
         public Country Country { get; set; }
 
         [Display(Name = "Miasto:")]
-        [Required(ErrorMessage ="Wprowadź miasto")]
+        [Required(ErrorMessage = "Wprowadź miasto")]
         [StringLength(30)]
         public string City { get; set; }
 
         [Display(Name = "Kod pocztowy:")]
-        [Required(ErrorMessage ="Wprowadź kod pocztowy")]
+        [Required(ErrorMessage = "Wprowadź kod pocztowy")]
         [StringLength(10)]
         public string CityCode { get; set; }
 
         [Display(Name = "Ulica:")]
-        [Required(ErrorMessage ="Wprowadź nazwę ulicy")]
+        [Required(ErrorMessage = "Wprowadź nazwę ulicy")]
         [StringLength(60)]
         public string Street { get; set; }
 
         [Display(Name = "Numer mieszkania:")]
-        [Required(ErrorMessage ="Wprowadź numer mieszkania")]
+        [Required(ErrorMessage = "Wprowadź numer mieszkania")]
         [StringLength(25)]
-        public string ApartmentNumber {get; set;}
+        public string ApartmentNumber { get; set; }
 
         [Display(Name = "Telefon:")]
         [Required(ErrorMessage = "Musisz wprowadzić numer telefonu")]
@@ -58,8 +58,8 @@ namespace DemoShop.Models
         public string Phone { get; set; }
 
         [Display(Name = "Email:")]
-        [Required(ErrorMessage ="Musisz wprowadzić adres e-mail")]
-        [EmailAddress(ErrorMessage ="Błedny adres e-mail")]
+        [Required(ErrorMessage = "Musisz wprowadzić adres e-mail")]
+        [EmailAddress(ErrorMessage = "Błedny adres e-mail")]
         public string Email { get; set; }
 
         [Display(Name = "Komentarz/Uwagi:")]
@@ -74,16 +74,21 @@ namespace DemoShop.Models
         [Display(Name = "Status:")]
         public State State { get; set; }
 
+        [Display(Name = "Koszt przesyłki")]
+        public decimal ShippingCost { get; set; }
+
         public ICollection<OrderItem> OrderItems { get; set; }
+
+
     }
 
     public enum Country
     {
-        [Display(Name ="Polska")]
+        [Display(Name = "Polska")]
         Poland,
-        [Display(Name ="Niemcy")]
+        [Display(Name = "Niemcy")]
         Germany,
-        [Display(Name ="Anglia")]
+        [Display(Name = "Anglia")]
         England,
         [Display(Name = "Rosja")]
         Russia
@@ -91,13 +96,11 @@ namespace DemoShop.Models
 
     public enum State
     {
-        [Display(Name ="Nowe")]
+        [Display(Name = "Nowe")]
         New,
-        [Display(Name ="Anulowane")]
+        [Display(Name = "Anulowane")]
         Canceled,
-        [Display(Name ="Reklamacja/Skarga")]
-        Complained,
-        [Display(Name ="Wysłane")]
+        [Display(Name = "Wysłane")]
         Shipped
     }
 }

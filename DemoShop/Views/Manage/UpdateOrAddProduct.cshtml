@@ -1,0 +1,130 @@
+﻿@model DemoShop.ViewModels.EditAddProductViewModel
+@using DemoShop.Infrastructure
+@{
+    ViewBag.Title = "UpdateOrAddProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-info">
+    <div class="row container_content">
+        <div class="col-12 text-center UpSiteMapIconLogin"> <spam id="ManageMenuSiteMap">@Html.MvcSiteMap().SiteMapPath()</spam></div>
+        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-compose-100.png")" /></div>
+    </div>
+</section>
+
+<section class="bg-white moreMargin" style="margin-top:50px;">
+    <div class="row container_content">
+
+        <div class="col-md-12 col-12 col-sm-12">
+
+
+            @using (Html.BeginForm("UpdateOrAddProduct", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(a => a.Product.ProductID)
+                @Html.HiddenFor(a => a.Product.AddDate)
+                @Html.HiddenFor(a => a.Product.FileNamePhoto)
+
+                <h4>Edycja produktu</h4>
+                <hr />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.ProductTitle, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.TextBoxFor(m => m.Product.ProductTitle, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Product.ProductTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.Manufacturer, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.TextBoxFor(m => m.Product.Manufacturer, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Product.Manufacturer, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.Description, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.TextBoxFor(m => m.Product.Description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Product.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.Price, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.TextBoxFor(m => m.Product.Price, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Product.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.Weight, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.TextBoxFor(m => m.Product.Weight, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Product.Weight, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.Promotion, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.CheckBoxFor(m => m.Product.Promotion, new { @class = "form-control", style = "width: 40px;" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.TheBestProduct, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.CheckBoxFor(m => m.Product.TheBestProduct, new { @class = "form-control", style = "width: 40px;" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Categories, "Kategoria", new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.DropDownListFor(m => m.Product.CategoryID, new SelectList(Model.Categories, "CategoryID", "Title"), new { @class = "form-control" })
+                    </div>
+                </div>
+                if (Model.EditModeWithID == false)
+                { <div class="form-group row">
+                        @Html.LabelFor(m => m.Product.FileNamePhoto, "Zdjęcie produktu", new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                        <div class="col-md-10 col-sm-8 col-8">
+                            <input type="file" id="validatedCustomFile" name="file" required title="Należy dodać zdjęcie">
+                        </div>
+                    </div>
+                }
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Product.Active, new { @class = "col-md-2 col-sm-4 col-4 col-form-label text-right" })
+                    <div class="col-md-10 col-sm-8 col-8">
+                        @Html.CheckBoxFor(m => m.Product.Active, new { @class = "form-control", style = "width: 40px;" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="offset-md-2 offset-sm-4 offset-4 col-8 col-sm-8 col-md-10">
+                        <input type="submit" class="btn btn-default" value="Zapisz" />
+                        @if (Model.ResponseSuccess.HasValue && Model.ResponseSuccess.Value)
+                        {
+                            <span style="background-color:greenyellow">Wprowadzono zmiany</span>
+                        }
+                        @if (Model.ResponseError.HasValue && Model.ResponseError.Value)
+                        {
+                            <span style="background-color:red">Nie zmieniaj formatu ceny i wagi (nie wprowadzono zmian!)</span>
+
+                        }
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/validationlocalization.js"></script>
+}
+
+
+
+
+
+
+

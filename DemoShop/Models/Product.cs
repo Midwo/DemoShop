@@ -26,6 +26,7 @@ namespace DemoShop.Models
         public DateTime AddDate { get; set; }
 
         [Display(Name ="Opis produktu")]
+        [Required]
         public string  Description { get; set; }
 
         [Display(Name ="Cena")]
@@ -33,6 +34,7 @@ namespace DemoShop.Models
         public decimal Price { get; set; }
 
         [Display(Name = "Waga")]
+        [Required]
         public decimal Weight { get; set; }
 
         [Display(Name ="Promocja")]

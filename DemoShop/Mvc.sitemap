@@ -28,6 +28,26 @@
       </mvcSiteMapNode>
       <mvcSiteMapNode title="Historia zamówień" controller="Manage" action="ViewOfOrderHistory">
       </mvcSiteMapNode>
+      <mvcSiteMapNode title="Oczekujące zamówieia" controller="Manage" action="WaitingViewOfOrderHistory">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Wysłane zamówieia" controller="Manage" action="ShippedViewOfOrderHistory">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Anulowane zamówieia" controller="Manage" action="CanceledViewOfOrderHistory">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Wysyłka nowych zamówień" controller="Manage" action="AdminNewViewOfOrder">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Wysłane zamówienia" controller="Manage" action="AdminShippedViewOfOrder">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Anulowane zamówienia" controller="Manage" action="AdminCanceledViewOfOrder">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Historia zamówień" controller="Manage" action="AdminAllViewOfOrder">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Edycja produktu" controller="Manage" action="UpdateOrAddProduct">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Widok produktu nieaktywnego" controller="Store" action="AdminDetails">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Lista produktów nieaktywnych" controller="Manage" action="DisabledProduct">
+      </mvcSiteMapNode>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

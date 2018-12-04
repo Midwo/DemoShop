@@ -29,7 +29,12 @@
                 {
                     <div class="overlay overlay-promotion"></div>
                 }
-                
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="@Url.Action("UpdateOrAddProduct","Manage", new { productId = Model.ProductID })" class="btn add2cartver2">Edytuj</a>
+
+                }
             </div>
         </div>
 

@@ -16,8 +16,9 @@ namespace DemoShop.Migrations
 
         protected override void Seed(DemoShop.DAL.DemoShopContext context)
         {
-            DemoShopInitializer.InsertData(context);
+           DemoShopInitializer.InsertData(context);
             //  This method will be called after migrating to the latest version.
+               DemoShopInitializer.InitializeIdentityForEF(context);
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.

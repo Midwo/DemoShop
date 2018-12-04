@@ -47,6 +47,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -126,8 +132,20 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Elmah, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Elmah.4.0\lib\net35\NLog.Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,6 +153,10 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -254,6 +276,18 @@
     <Compile Include="Migrations\201812010218318_DeclareDatetime2.Designer.cs">
       <DependentUpon>201812010218318_DeclareDatetime2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812030302250_Shippingcost.cs" />
+    <Compile Include="Migrations\201812030302250_Shippingcost.Designer.cs">
+      <DependentUpon>201812030302250_Shippingcost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812040222040_newRequiredFieldInProduct.cs" />
+    <Compile Include="Migrations\201812040222040_newRequiredFieldInProduct.Designer.cs">
+      <DependentUpon>201812040222040_newRequiredFieldInProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812041445332_RunSqlScript.cs" />
+    <Compile Include="Migrations\201812041445332_RunSqlScript.Designer.cs">
+      <DependentUpon>201812041445332_RunSqlScript.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CartData.cs" />
     <Compile Include="Models\Category.cs" />
@@ -267,6 +301,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\CartRemoveViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
+    <Compile Include="ViewModels\EditAddProductViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
@@ -293,11 +328,14 @@
     <Content Include="Content\IconsMenuProduct\icons8-school-30.png" />
     <Content Include="Content\IconsMenuProduct\icons8-select-all-30.png" />
     <Content Include="Content\IconsMenuProduct\icons8-video-camera-30.png" />
+    <Content Include="Content\Icon\icons8-compose-100.png" />
+    <Content Include="Content\Icon\icons8-delete-104.png" />
     <Content Include="Content\Icon\icons8-encrypt-100.png" />
     <Content Include="Content\Icon\icons8-globe-100.png" />
     <Content Include="Content\Icon\icons8-location-100.png" />
     <Content Include="Content\Icon\icons8-male-user-filled-100.png" />
     <Content Include="Content\Icon\icons8-password-100.png" />
+    <Content Include="Content\Icon\icons8-rocket-100.png" />
     <Content Include="Content\Icon\icons8-signin-100.png" />
     <Content Include="Content\Icon\icons8-time-machine-100.png" />
     <Content Include="Content\Icon\icons8-user-50.png" />
@@ -436,6 +474,10 @@
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="NLog.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -463,6 +505,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\validationlocalization.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -521,7 +564,12 @@
     <Content Include="Views\ShoppingCart\PaidCart.cshtml" />
     <Content Include="Views\ShoppingCart\OrderConfirmation.cshtml" />
     <Content Include="Views\Manage\ViewOfOrderHistory.cshtml" />
-    <Content Include="Views\Manage\AdminViewOfOrder.cshtml" />
+    <Content Include="Views\Manage\AdminNewViewOfOrder.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
+    <Content Include="Views\Manage\UpdateOrAddProduct.cshtml" />
+    <Content Include="Views\Manage\DisabledProduct.cshtml" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -561,6 +609,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812010218318_DeclareDatetime2.resx">
       <DependentUpon>201812010218318_DeclareDatetime2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812030302250_Shippingcost.resx">
+      <DependentUpon>201812030302250_Shippingcost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812040222040_newRequiredFieldInProduct.resx">
+      <DependentUpon>201812040222040_newRequiredFieldInProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812041445332_RunSqlScript.resx">
+      <DependentUpon>201812041445332_RunSqlScript.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

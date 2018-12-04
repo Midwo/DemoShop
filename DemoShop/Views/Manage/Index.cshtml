@@ -1,4 +1,4 @@
-﻿
+﻿@model DemoShop.ViewModels.OtherLogInViewModel
 @using DemoShop.Infrastructure
 @{
     ViewBag.Title = "Index";
@@ -49,31 +49,78 @@
 
         <div class="row container_content">
 
-            <div class="col-md-6 col-12 col-sm-12">
-                <h2 class="text-center">Zarządzanie kontem: </h2>
-                <a href="@Url.Action("ProfileAddress","Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Adres dostarczenia</span></a>
-                <a href="@Url.Action("OtherLogIn", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Dodatkowe opcje logowania</span></a>
-                @if (Model.HasPassword)
+
+            @{ if (Model.isAdmin)
                 {
-                    <a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Zmiana hasła</span></a>
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <h2 class="text-center">Zarządzanie kontem: </h2>
+                        <a href="@Url.Action("OtherLogIn", "Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%;">Dodatkowe opcje logowania</span></a>
+                        @if (Model.HasPassword)
+                        {
+                            @*<a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-light btn-lg btn-block disabled"><span style="font-size:120%;">Zmiana hasła (Wyłączona w demo)</span></a>*@
+                            <a href="" class="btn btn-light btn-lg btn-block disabled"><span style="font-size:120%;">Zmiana hasła (wyłączona w demo)</span></a>
+
+                        }
+                        else
+                        {
+                            @*<a href="@Url.Action("SetPassword", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Utwórz hasło</span></a>*@
+                        }
+                        <h3 style="color:red; text-align:center;">@ViewBag.StatusMessage</h3>
+                    </div>
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <h2 class="text-center">Przesyłki:</h2>
+                        <a href="@Url.Action("AdminNewViewOfOrder","Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Oczekujące zamówienia</span></a>
+                        <a href="@Url.Action("AdminShippedViewOfOrder","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wysłane zamówienia</span></a>
+                        <a href="@Url.Action("AdminCanceledViewOfOrder","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Anulowane zamówienia</span></a>
+                        <a href="@Url.Action("AdminAllViewOfOrder","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wszystkie zamówienia</span></a>
+                    </div>
+
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <h2 class="text-center">Zarządzanie produktami:</h2>
+                        <a href="@Url.Action("UpdateOrAddProduct","Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Dodaj nowy produkt</span></a>
+                        <a href="@Url.Action("DisabledProduct","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wyłączone produkty</span></a>
+                        <a href="@Url.Content("~/elmah")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Logi błędów</span></a>
+
+                    </div>
+
+
                 }
                 else
                 {
-                    <a href="@Url.Action("SetPassword", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Utwórz hasło</span></a>
-                }
-                <h3 style="color:red; text-align:center;">@ViewBag.StatusMessage</h3>
-            </div>
-            <div class="col-md-6 col-12 col-sm-12">
-                <h2 class="text-center">Historia, statusy:</h2>
-                <a  href="@Url.Action("ViewOfOrderHistory","Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Historia zamówień</span></a>
-                <a class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Oczekujące zamówienia</span></a>
-                <a class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wysłane zamówienia</span></a>
-                <a class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Anulowane zamówienia</span></a>
-            </div>
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <h2 class="text-center">Zarządzanie kontem: </h2>
+                        <a href="@Url.Action("ProfileAddress", "Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Adres dostarczenia</span></a>
+                        <a href="@Url.Action("OtherLogIn", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Dodatkowe opcje logowania</span></a>
+                        @if (Model.HasPassword)
+                        {
+                            if (Model.isUserClient)
+                            {
+                                <a href="" class="btn btn-light btn-lg btn-block disabled"><span style="font-size:120%;">Zmiana hasła (wyłączona w demo)</span></a>
 
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Zmiana hasła</span></a>
+
+                            }
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("SetPassword", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Utwórz hasło</span></a>
+                        }
+                        <h3 style="color:red; text-align:center;">@ViewBag.StatusMessage</h3>
+                    </div>
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <h2 class="text-center">Historia, statusy:</h2>
+                        <a href="@Url.Action("ViewOfOrderHistory", "Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Historia zamówień</span></a>
+                        <a href="@Url.Action("WaitingViewOfOrderHistory", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Oczekujące zamówienia</span></a>
+                        <a href="@Url.Action("ShippedViewOfOrderHistory", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wysłane zamówienia</span></a>
+                        <a href="@Url.Action("CanceledViewOfOrderHistory", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Anulowane zamówienia</span></a>
+                    </div>
+                }
+            }
 
         </div>
-
 </section>
 <h1 class="text-center" style="margin-top:20px;"> Informacje:</h1>
 <section class="regular sliderManage container">

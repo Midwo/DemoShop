@@ -63,7 +63,31 @@
         @if (Model.CartDatas.Any())
         {
             <div id="summaryPrice-div" class="offset-md-9 col-md-3 offset-sm-7 col-sm-4 text-center" style="font-size: 25px; margin-bottom: 20px;visibility:visible;">
-                Razem: <span class="text-right" id="summaryPrice-value"> @Model.TotalPrice </span> zł
+                Produkty: <span class="text-right" id="summaryPrice-value"> @Model.TotalPrice </span> zł
+
+                @{
+                    int quality = 0;
+
+                    foreach (var item in Model.CartDatas)
+                    {
+                        quality += item.Quantity;
+                    };
+
+                    <span id="cartQuantity-in-ShippingCost" data-quality="@quality">
+                        @if (quality <= 2)
+                        {<text>+ Wysyłka: 15.99 zł </text>}
+                    else if (quality <= 6)
+                    {
+                        <text>+ Wysyłka: 24.99 zł </text>
+                    }
+                    else
+                    {
+                        <text>+ Wysyłka: 25.99 zł </text>
+                    }
+                    </span>
+
+                }
+
             </div>
         }
         else
@@ -114,6 +138,7 @@
 
                             } else {
                                 $('#cart-item-count-' + response.RemoveItemId).text(response.RemovedItemCount);
+
                             }
 
                             if (response.ActualItemsCount == 0) {
@@ -123,7 +148,17 @@
 
                             $('#summaryPrice-value').text(response.TotalCost);
                             $('#cartQuantity-in-nav-menu').text(response.ActualItemsCount);
-
+                            $('#cartQuantity-in-ShippingCost').attr("data-quality", response.ActualItemsCount);
+                            var sVal = $('#cartQuantity-in-ShippingCost').attr("data-quality");
+                            if (sVal <= 2) {
+                                $('#cartQuantity-in-ShippingCost').text("+ Wysyłka: 15.99 zł");
+                            }
+                            else if (sVal <= 6) {
+                                $('#cartQuantity-in-ShippingCost').text("+ Wysyłka: 24.99 zł");
+                            }
+                            else {
+                                $('#cartQuantity-in-ShippingCost').text("+ Wysyłka: 25.99 zł");
+                            }
                         });
 
                     return false;

@@ -16,6 +16,8 @@ namespace DemoShop.ViewModels
         public SetPasswordViewModel SetPasswordViewModel { get; set; }
         public ChangePasswordViewModel ChangePasswordViewModel { get; set; }
         public bool HasPassword { get; set; }
+        public bool isAdmin { get; set; }
+        public bool isUserClient { get; set; }
     }
 
 

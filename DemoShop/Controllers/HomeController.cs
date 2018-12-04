@@ -2,6 +2,7 @@
 using DemoShop.Infrastructure;
 using DemoShop.Models;
 using DemoShop.ViewModels;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace DemoShop.Controllers
 {
     public class HomeController : Controller
     {
+        //log with NLOG
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private DemoShopContext db = new DemoShopContext(); 
         public ActionResult Index()
         {
@@ -19,6 +23,7 @@ namespace DemoShop.Controllers
             List<Category> ListCategory;
             InterfaceCacheProvider cache = new DefaultCacheProvider();
 
+            logger.Info("Ktoś wszedł na stronę");
 
             if (cache.CheckSet(CacheNamespace.ListCategory))
             {
@@ -28,7 +33,7 @@ namespace DemoShop.Controllers
             else
             {
                 ListCategory = db.Categories.Where(a => a.Active == true).ToList();
-                cache.Set(CacheNamespace.ListCategory, ListCategory, 3600);
+                cache.Set(CacheNamespace.ListCategory, ListCategory, 10);
             }
             var categories = ListCategory;
 
@@ -52,7 +57,7 @@ namespace DemoShop.Controllers
                         item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
                     }
                 }
-                cache.Set(CacheNamespace.BestProduct, ListProduct, 3600);
+                cache.Set(CacheNamespace.BestProduct, ListProduct, 10);
             }
             var theBestProducts = ListProduct.Take(4);
 
@@ -60,11 +65,12 @@ namespace DemoShop.Controllers
             if (cache.CheckSet(CacheNamespace.NewProductFourActiveRecords))
             {
                 ListProduct = cache.Get(CacheNamespace.NewProductFourActiveRecords) as List<Product>;
-                ListProduct = ListProduct.OrderBy(a => Guid.NewGuid()).ToList();     
+                ListProduct = ListProduct.OrderBy(a => Guid.NewGuid()).ToList();
             }
             else
             {
-                ListProduct = db.Products.Where(a => a.Active == true).OrderBy(a=> Guid.NewGuid()).Take(4).ToList();
+                ListProduct = db.Products.Where(a => a.Active == true).OrderByDescending(a=> a.AddDate).Take(4).ToList();
+                ListProduct = ListProduct.OrderBy(a => Guid.NewGuid()).ToList();
                 foreach (var item in ListProduct)
                 {
                     if (item.Description.Length >= 80)
@@ -76,7 +82,7 @@ namespace DemoShop.Controllers
                         item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
                     }
                 }
-                cache.Set(CacheNamespace.NewProductFourActiveRecords, ListProduct, 3600);
+                cache.Set(CacheNamespace.NewProductFourActiveRecords, ListProduct, 10);
             }
             var newProducts = ListProduct;
 
@@ -99,7 +105,7 @@ namespace DemoShop.Controllers
                         item.ProductTitle = item.ProductTitle.Substring(0, 24) + "[...]";
                     }
                 }
-                cache.Set(CacheNamespace.ProductsPromotions, ListProduct, 3600);
+                cache.Set(CacheNamespace.ProductsPromotions, ListProduct, 10);
             }
             var promotions = ListProduct.Take(4);
 
