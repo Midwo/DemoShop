@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -492,7 +493,7 @@ namespace DemoShop.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public State ChangeOrderState(Order order)
         {
@@ -509,6 +510,22 @@ namespace DemoShop.Controllers
             }
             db.SaveChanges();
             return order.State;
+        }
+
+        [AllowAnonymous]
+        public ActionResult SendConfirmationEmail(int orderID, string surname)
+        {
+            var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            OrderConfirmationEmail email = new OrderConfirmationEmail();
+            email.To = order.Email;
+            email.Cost = order.SummaryPrice;
+            email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

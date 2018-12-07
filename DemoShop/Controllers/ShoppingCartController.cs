@@ -3,6 +3,7 @@ using DemoShop.DAL;
 using DemoShop.Infrastructure;
 using DemoShop.Models;
 using DemoShop.ViewModels;
+using Hangfire;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -125,7 +126,12 @@ namespace DemoShop.Controllers
 
                 shoppingCartManager.ClearCart();
 
+                //var order = db.Orders.Include("OrderItems").Include("OrderItems.Product").SingleOrDefault(a => a.OrderID == newOrder.OrderID);
+                var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == newOrder.OrderID);
 
+                string url = Url.Action("SendConfirmationEmail", "Manage", new { orderID = newOrder.OrderID, surname = newOrder.Surname }, Request.Url.Scheme);
+
+                BackgroundJob.Enqueue(() => Helpers.CallUrl(url));
 
                 return RedirectToAction("OrderConfirmation");
 

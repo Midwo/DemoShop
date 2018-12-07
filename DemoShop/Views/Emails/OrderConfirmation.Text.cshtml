@@ -1,0 +1,13 @@
+﻿@model DemoShop.ViewModels.OrderConfirmationEmail
+Content-Type: text/plain; charset=utf-8
+
+
+Witaj,
+Dokonałeś testowego zakupu w sklepie "DemoShop".
+
+Twoje zamówienie jest aktualnie w fazie weryfikacyjnej. Wykonałeś zakupy na kwotę: @Model.Cost zł. Dokonane zakupy zostaną wysłane pod adres: @Model.Address.
+
+W celu śledzenia zamówienia, zapraszamy na stronę:
+@Url.Action("ViewOfOrderHistory", "Manage", null, "https")
+
+Copyright © 2018 DemoShop All rights reserved.
