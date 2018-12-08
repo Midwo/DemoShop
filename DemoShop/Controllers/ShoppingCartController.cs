@@ -20,10 +20,10 @@ namespace DemoShop.Controllers
         private ShoppingCartManager shoppingCartManager;
         private InterfaceSessionManager interfaceSessionManager;
         private DemoShopContext db = new DemoShopContext();
-
+        private IMailService mailService;
         // GET: ShoppingCard
 
-        public ShoppingCartController()
+        public ShoppingCartController(IMailService mailService)
         {
             this.interfaceSessionManager = new SessionManager();
             this.shoppingCartManager = new ShoppingCartManager(this.interfaceSessionManager, this.db);
@@ -131,7 +131,8 @@ namespace DemoShop.Controllers
 
                 string url = Url.Action("SendConfirmationEmail", "Manage", new { orderID = newOrder.OrderID, surname = newOrder.Surname }, Request.Url.Scheme);
 
-                BackgroundJob.Enqueue(() => Helpers.CallUrl(url));
+                //BackgroundJob.Enqueue(() => Helpers.CallUrl(url));
+                mailService.SendOrderConfirmationEmail(order);
 
                 return RedirectToAction("OrderConfirmation");
 

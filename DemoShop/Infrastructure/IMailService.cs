@@ -1,0 +1,21 @@
+﻿using DemoShop.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace DemoShop.Infrastructure
+{
+    public interface IMailService
+    {
+        void OrderConfirmationEmail(Order order);
+
+        void SendOrderShippedEmail(Order order);
+
+        void SendOrderCanceledEmail(Order order);
+
+        void SendNewsletterEmail();
+
+        void SendContactEmail();
+    }
+}

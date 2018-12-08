@@ -245,11 +245,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CacheNamespace.cs" />
+    <Compile Include="Infrastructure\DataPostalIMailService.cs" />
     <Compile Include="Infrastructure\DefaultCacheProvider.cs" />
     <Compile Include="Infrastructure\DetailCategoryDynamicNodeProvider.cs" />
     <Compile Include="Infrastructure\DetailProductDynamicNodeProvider.cs" />
+    <Compile Include="Infrastructure\HangFirePostalIMailService.cs" />
     <Compile Include="Infrastructure\Helpers.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
+    <Compile Include="Infrastructure\IMailService.cs" />
     <Compile Include="Infrastructure\InterfaceCacheProvider.cs" />
     <Compile Include="Infrastructure\InterfaceSessionMaganer.cs" />
     <Compile Include="Infrastructure\PathHelpers.cs" />
