@@ -8,14 +8,14 @@ namespace DemoShop.Infrastructure
 {
     public interface IMailService
     {
-        void OrderConfirmationEmail(Order order);
+        void SendOrderConfirmationEmail(Order order);
 
-        void SendOrderShippedEmail(Order order);
+        //void SendOrderShippedEmail(Order order);
 
-        void SendOrderCanceledEmail(Order order);
+        //void SendOrderCanceledEmail(Order order);
 
-        void SendNewsletterEmail();
+        //void SendNewsletterEmail();
 
-        void SendContactEmail();
+        //void SendContactEmail();
     }
 }

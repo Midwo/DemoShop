@@ -21,10 +21,17 @@ namespace DemoShop.Controllers
         private InterfaceSessionManager interfaceSessionManager;
         private DemoShopContext db = new DemoShopContext();
         private IMailService mailService;
+        private InterfaceSessionManager sessionManager;
         // GET: ShoppingCard
 
-        public ShoppingCartController(IMailService mailService)
+        public ShoppingCartController(IMailService mailService, InterfaceSessionManager sessionManager)
+        //public ShoppingCartController()
         {
+             this.sessionManager = sessionManager;
+             this.mailService = mailService;
+            //this.sessionManager = new SessionManager();
+            //this.mailService = new HangFirePostalIMailService();
+
             this.interfaceSessionManager = new SessionManager();
             this.shoppingCartManager = new ShoppingCartManager(this.interfaceSessionManager, this.db);
 
@@ -129,10 +136,10 @@ namespace DemoShop.Controllers
                 //var order = db.Orders.Include("OrderItems").Include("OrderItems.Product").SingleOrDefault(a => a.OrderID == newOrder.OrderID);
                 var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == newOrder.OrderID);
 
-                string url = Url.Action("SendConfirmationEmail", "Manage", new { orderID = newOrder.OrderID, surname = newOrder.Surname }, Request.Url.Scheme);
+               // string url = Url.Action("SendConfirmationEmail", "Manage", new { orderID = newOrder.OrderID, surname = newOrder.Surname }, Request.Url.Scheme);
 
-                //BackgroundJob.Enqueue(() => Helpers.CallUrl(url));
-                mailService.SendOrderConfirmationEmail(order);
+                ///BackgroundJob.Enqueue(() => Helpers.CallUrl(url));
+                this.mailService.SendOrderConfirmationEmail(order);
 
                 return RedirectToAction("OrderConfirmation");
 
