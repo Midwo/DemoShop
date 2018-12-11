@@ -1,10 +1,12 @@
 ﻿using DemoShop.App_Start;
 using DemoShop.DAL;
+using DemoShop.Infrastructure;
 using DemoShop.Models;
 using DemoShop.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,7 +22,16 @@ namespace DemoShop.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private DemoShopContext db = new DemoShopContext();
+        private IMailService mailService;
+        
+        public ManageController(IMailService mailService)
+        {
+            this.mailService = mailService;
+        }
+
+
         public async Task<ActionResult> ProfileAddress(ManageMessageId? message)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -40,6 +51,7 @@ namespace DemoShop.Controllers
 
         public ActionResult Index(ManageMessageId? message)
         {
+            logger.Info("Włączono panel zarządzania kontami");
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Hasło zostało zmienione"
                 : message == ManageMessageId.SetPasswordSuccess ? "Hasło zostało ustawione"
@@ -503,10 +515,11 @@ namespace DemoShop.Controllers
             if (orderToModify.State == State.Shipped)
             {
                 orderToModify.DateShipped = DateTime.Now;
+                //mailService.SendOrderShippedEmail(orderToModify);
             }
             else if (orderToModify.State == State.Canceled)
             {
-
+                //mailService.SendOrderCanceledEmail(orderToModify);
             }
             db.SaveChanges();
             return order.State;

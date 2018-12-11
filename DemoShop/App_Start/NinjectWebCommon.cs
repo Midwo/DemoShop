@@ -65,6 +65,7 @@ namespace DemoShop.App_Start
             //kernel.Bind<IMailService>().To<PostalIMailService>();
             kernel.Bind<IMailService>().To<HangFirePostalIMailService>();
             kernel.Bind<InterfaceSessionManager>().To<SessionManager>();
+            kernel.Bind<InterfaceCacheProvider>().To<DefaultCacheProvider>();
         }        
     }
 }
