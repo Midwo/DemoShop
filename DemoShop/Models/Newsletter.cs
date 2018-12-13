@@ -8,6 +8,9 @@ namespace DemoShop.Models
 {
     public class Newsletter
     {
+        [Key]
+        public int NewsletterID { get; set; }
+
         [Display(Name = "Email")]
         [EmailAddress]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Należy wprowadzić email")]

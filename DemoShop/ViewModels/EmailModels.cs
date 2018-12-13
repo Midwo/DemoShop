@@ -12,4 +12,16 @@ namespace DemoShop.ViewModels
         public decimal Cost { get; set; }
         public string Address { get; set; }
     }
+
+    public class OrderSendedEmail : Email
+    {
+        public string To { get; set; }
+        public decimal Cost { get; set; }
+        public string Address { get; set; }
+    }
+
+    public class OrderCanceledEmail : Email
+    {
+        public string To { get; set; }
+    }
 }

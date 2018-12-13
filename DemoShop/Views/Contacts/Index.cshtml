@@ -1,0 +1,70 @@
+﻿@model IEnumerable<DemoShop.Models.Contact>
+@using DemoShop.Infrastructure
+@using DemoShop.Models
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-info">
+    <div class="row container_content">
+        <div class="col-12 text-center UpSiteMapIconLogin"> <spam id="ManageMenuSiteMap">@Html.MvcSiteMap().SiteMapPath()</spam></div>
+        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-contact-100.png")" /></div>
+    </div>
+</section>
+<section class="bg-white moreMargin" style="margin-top:50px;">
+    <div class="row container_content">
+        <div class="col-md-12 col-12 col-sm-12">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Message)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SentAnswer)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SentAnswer)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit","Contacts", new { Contactid = item.ContactID })" class="btn add2cartver2">Edytuj</a>
+                            <a href="@Url.Action("Details","Contacts", new { Contactid = item.ContactID })" class="btn add2cartver2">Pokaż</a>
+                            <a href="@Url.Action("Delete","Contacts", new { Contactid = item.ContactID })" class="btn add2cartver2">Usuń</a>
+                        </td>
+                    </tr>
+                }
+
+
+            </table>
+        </div>
+    </div>
+</section>

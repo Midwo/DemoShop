@@ -253,8 +253,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NewslettersController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="DAL\DemoShopContext.cs" />
@@ -322,6 +324,14 @@
     <Compile Include="Migrations\201812041445332_RunSqlScript.Designer.cs">
       <DependentUpon>201812041445332_RunSqlScript.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812112321235_NewsletterAndContact.cs" />
+    <Compile Include="Migrations\201812112321235_NewsletterAndContact.Designer.cs">
+      <DependentUpon>201812112321235_NewsletterAndContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120026000_editModelContact.cs" />
+    <Compile Include="Migrations\201812120026000_editModelContact.Designer.cs">
+      <DependentUpon>201812120026000_editModelContact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CartData.cs" />
     <Compile Include="Models\Category.cs" />
@@ -366,6 +376,7 @@
     <Content Include="Content\IconsMenuProduct\icons8-select-all-30.png" />
     <Content Include="Content\IconsMenuProduct\icons8-video-camera-30.png" />
     <Content Include="Content\Icon\icons8-compose-100.png" />
+    <Content Include="Content\Icon\icons8-contact-100.png" />
     <Content Include="Content\Icon\icons8-delete-104.png" />
     <Content Include="Content\Icon\icons8-encrypt-100.png" />
     <Content Include="Content\Icon\icons8-globe-100.png" />
@@ -486,7 +497,6 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="Prototype\Powitanie_DemoShop.html" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -612,10 +622,24 @@
     <Content Include="Views\Emails\OrderConfirmation.cshtml" />
     <Content Include="Views\Emails\OrderConfirmation.Html.cshtml" />
     <Content Include="Views\Emails\OrderConfirmation.Text.cshtml" />
+    <Content Include="Views\Emails\OrderSended.cshtml" />
+    <Content Include="Views\Emails\OrderSended.Text.cshtml" />
+    <Content Include="Views\Emails\OrderSended.Html.cshtml" />
+    <Content Include="Views\Emails\OrderCanceled.cshtml" />
+    <Content Include="Views\Emails\OrderCanceled.Html.cshtml" />
+    <Content Include="Views\Emails\OrderCanceled.Text.cshtml" />
+    <Content Include="Views\Contacts\Delete.cshtml" />
+    <Content Include="Views\Contacts\Details.cshtml" />
+    <Content Include="Views\Contacts\Edit.cshtml" />
+    <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Views\Newsletters\Create.cshtml" />
+    <Content Include="Views\Newsletters\Delete.cshtml" />
+    <Content Include="Views\Newsletters\Details.cshtml" />
+    <Content Include="Views\Newsletters\Edit.cshtml" />
+    <Content Include="Views\Newsletters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Contact\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -661,6 +685,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812041445332_RunSqlScript.resx">
       <DependentUpon>201812041445332_RunSqlScript.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812112321235_NewsletterAndContact.resx">
+      <DependentUpon>201812112321235_NewsletterAndContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120026000_editModelContact.resx">
+      <DependentUpon>201812120026000_editModelContact.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

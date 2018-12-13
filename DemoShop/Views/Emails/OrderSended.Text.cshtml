@@ -1,0 +1,14 @@
+﻿@model DemoShop.ViewModels.OrderSendedEmail
+Content-Type: text/plain; charset=utf-8
+
+
+Witaj,
+Wysłano do Ciebie paczkę z sklepu demonstracyjnego "DemoShop".
+
+Twoje zamówienie zostało spakowane i przekazane do odbioru przez kuriera. Dziękujemy za dokonanie zakupów na kwotę: @Model.Cost zł. Paczka zostanie dostarczona pod adres: @Model.Address.
+
+Śledzenie statusów przesyłek możliwe jest pod linkiem:
+
+@Url.Action("ViewOfOrderHistory", "Manage", null, "https")
+
+Copyright © 2018 DemoShop All rights reserved.

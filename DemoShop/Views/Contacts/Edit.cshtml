@@ -1,0 +1,83 @@
+﻿@model DemoShop.Models.Contact
+@using DemoShop.Infrastructure
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-info">
+    <div class="row container_content">
+        <div class="col-12 text-center UpSiteMapIconLogin"> <spam id="ManageMenuSiteMap">@Html.MvcSiteMap().SiteMapPath()</spam></div>
+        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-contact-100.png")" /></div>
+    </div>
+</section>
+<section class="bg-white moreMargin" style="margin-top:50px;">
+    <div class="row container_content">
+        <div class="col-md-12 col-12 col-sm-12">
+
+            @using (Html.BeginForm(new { ContactID = Model.ContactID, Name = Model.Name, Email = Model.Email, Phone = Model.Phone, Message = Model.Message, SentAnswer = Model.SentAnswer }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Wiadomość</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ContactID)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Message, new { @class = "form-control", @disabled = "disabled" } )
+                            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SentAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.SentAnswer)
+                                @Html.ValidationMessageFor(model => model.SentAnswer, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Zapisz" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div style="margin-bottom: 20px;">
+                @Html.ActionLink("Wróć do listy", "Index")
+            </div>
+        </div>
+    </div>
+</section>

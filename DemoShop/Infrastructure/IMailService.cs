@@ -10,9 +10,9 @@ namespace DemoShop.Infrastructure
     {
         void SendOrderConfirmationEmail(Order order);
 
-        //void SendOrderShippedEmail(Order order);
+        void SendOrderShippedEmail(Order order);
 
-        //void SendOrderCanceledEmail(Order order);
+        void SendOrderCanceledEmail(Order order);
 
         //void SendNewsletterEmail();
 

@@ -11,7 +11,7 @@ namespace DemoShop.DAL
     public class DemoShopContext : IdentityDbContext<ApplicationUser>
     {
 
-        public DemoShopContext() : base("DemoShopContext")
+        public DemoShopContext() : base("DemoShopContext", throwIfV1Schema: false)
         {
          
         }
@@ -30,5 +30,7 @@ namespace DemoShop.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> GetOrders { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
 }

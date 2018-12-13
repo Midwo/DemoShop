@@ -130,6 +130,26 @@ namespace DemoShop.Controllers
             return View(viewname);
         }
 
+        // POST: Home/CreateContact
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateContact([Bind(Include = "ContactID,Name,Email,Phone,Message,SentAnswer")] Contact contact)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Contacts.Add(contact);
+                db.SaveChanges();
+                return RedirectToAction("index");
+            }
+
+            return View("kontakt");
+        }
+        // GET:  Home/CreateContact
+        public ActionResult CreateContact()
+        {
+            return View("kontakt");
+        }
+
         //public ActionResult Contact()
         //{
         //    ViewBag.Message = "Your contact page.";

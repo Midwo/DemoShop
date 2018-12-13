@@ -368,7 +368,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Canceled).OrderBy(a => a.DateCreated).Take(10);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Canceled).OrderByDescending(a => a.DateCreated).Take(10);
             return View("AdminNewViewOfOrder", userOrders);
         }
         [Authorize(Roles = "Admin")]
@@ -377,7 +377,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Shipped).OrderBy(a => a.DateCreated).Take(10);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Shipped).OrderByDescending(a => a.DateCreated).Take(10);
             return View("AdminNewViewOfOrder", userOrders);
         }
 
@@ -387,7 +387,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").OrderBy(a => a.DateCreated).Take(100);
+            userOrders = db.Orders.Include("OrderItems").OrderByDescending(a => a.DateCreated).Take(100);
             return View("AdminNewViewOfOrder", userOrders);
         }
 
@@ -515,11 +515,11 @@ namespace DemoShop.Controllers
             if (orderToModify.State == State.Shipped)
             {
                 orderToModify.DateShipped = DateTime.Now;
-                //mailService.SendOrderShippedEmail(orderToModify);
+                mailService.SendOrderShippedEmail(orderToModify);
             }
             else if (orderToModify.State == State.Canceled)
             {
-                //mailService.SendOrderCanceledEmail(orderToModify);
+                mailService.SendOrderCanceledEmail(orderToModify);
             }
             db.SaveChanges();
             return order.State;
@@ -536,6 +536,34 @@ namespace DemoShop.Controllers
             email.To = order.Email;
             email.Cost = order.SummaryPrice;
             email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        [AllowAnonymous]
+        public ActionResult SendOrderShippedEmail(int orderID, string surname)
+        {
+            var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            OrderSendedEmail email = new OrderSendedEmail();
+            email.To = order.Email;
+            email.Cost = order.SummaryPrice;
+            email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        [AllowAnonymous]
+        public ActionResult SendOrderCanceledEmail(int orderID, string surname)
+        {
+            var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            OrderCanceledEmail email = new OrderCanceledEmail();
+            email.To = order.Email;
             email.Send();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);

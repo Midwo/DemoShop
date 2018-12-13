@@ -8,6 +8,9 @@ namespace DemoShop.Models
 {
     public class Contact
     {
+        [Key]
+        public int ContactID { get; set; }
+
         [Display(Name = "Imię")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Należy wprowadzić imię")]
         public string Name { get; set; }
@@ -19,7 +22,9 @@ namespace DemoShop.Models
 
         [Display(Name = "Telefon")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Należy wprowadzić numer telefonu")]
-        [Phone]
+        [StringLength(1000, MinimumLength = 9, ErrorMessage ="Minimum 9 znaków na numer")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$", ErrorMessage = "Zły format numeru")]
         public string Phone { get; set; }
 
         [Display(Name = "Wiadomość")]

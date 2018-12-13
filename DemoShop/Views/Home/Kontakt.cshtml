@@ -1,4 +1,4 @@
-﻿
+﻿@model DemoShop.Models.Contact
 @{
     ViewBag.Title = "Kontakt";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 <div class="jumbotron-index jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Dane Kontaktowe</h1>
-        
+
         <div class="row" style="margin:auto;">
             <div class="col-lg-4 text-center">
                 <h2 class="contact-title">W placówce:</h2>
@@ -45,8 +45,8 @@
                     </li>
                 </ol>
 
-            </div>  
-       
+            </div>
+
             <div class="col-lg-4 text-center">
                 <h2 class="contact-title">Email:</h2>
                 <ol class="list_nondecorations">
@@ -69,7 +69,7 @@
                 </ol>
             </div>
         </div>
-   
+
 
     </div>
 </div>
@@ -90,25 +90,55 @@
             </div>
             <div class="col-md-5" style="margin-bottom: 60px;">
                 <h4><strong>Napisz przez stronę:</strong></h4>
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="" value="" placeholder="Imię">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" name="" value="" placeholder="E-mail">
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" class="form-control" name="" value="" placeholder="Telefon">
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" name="" rows="3" placeholder="Treść wiadomości"></textarea>
-                    </div>
-                    <button class="btn btn-default" type="submit" name="button">
-                        <i class="fa fa-mail-forward" aria-hidden="true"></i> Wyślij pytanie
-                    </button>
-                </form>
+                @using (Html.BeginForm("CreateContact", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <form>
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "" + Html.DisplayNameFor(model => model.Name) + "" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "" + Html.DisplayNameFor(model => model.Email) + "" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "" + Html.DisplayNameFor(model => model.Phone) + "" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextAreaFor(model => model.Message, new { @class = "form-control", @rows = 3, @placeholder = "" + Html.DisplayNameFor(model => model.Message) + "" })
+                            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                        </div>
+                        <button class="btn btn-default" type="submit" name="button">
+                            <i class="fa fa-mail-forward" aria-hidden="true"></i> Wyślij pytanie
+                        </button>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </form>
+                }
+                @*<form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="" value="" placeholder="Imię">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="" value="" placeholder="E-mail">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" name="" value="" placeholder="Telefon">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="" rows="3" placeholder="Treść wiadomości"></textarea>
+                        </div>
+                        <button class="btn btn-default" type="submit" name="button">
+                            <i class="fa fa-mail-forward" aria-hidden="true"></i> Wyślij pytanie
+                        </button>
+                    </form>*@
             </div>
         </div>
     </div>
 </section>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
