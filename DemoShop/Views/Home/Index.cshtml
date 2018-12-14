@@ -183,7 +183,7 @@
 <h1 class="text-center margintopsmall"> Nasi partnerzy:</h1>
 <section class="regular slider container">
     <div>
-        <img src="@Url.Partners("biobattery.png")"/>
+        <img src="@Url.Partners("biobattery.png")" />
     </div>
     <div>
         <img src="@Url.Partners("certcenters.png")" />
@@ -208,38 +208,42 @@
     </div>
 </section>
 
-<div class="intro-header">
-    <div class="container-neswletter" align="center">
-        <div class="container">
-            <div class="tab-content custom-tab-content" align="center">
-                <h1>Newsletter!</h1>
-                <p>Zapisz się do newslettera i bądź na bieżąco z wszystkimi nowinkami w sklepie!</p>
 
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
+@using (Html.BeginForm("Create", "Newsletters", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="intro-header">
+        <div class="container-neswletter" align="center">
+            <div class="container">
+                <div class="tab-content custom-tab-content" align="center">
+                    <h1>Newsletter!</h1>
+                    <p>Zapisz się do newslettera i bądź na bieżąco z wszystkimi nowinkami w sklepie!</p>
 
-                        <input type="text" class="form-control input-lg" name="email" id="email" placeholder="Enter your Email" />
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Newsletter.Email, new { htmlAttributes = new { @class = "form-control input-lg text-center", @placeholder = "Enter your Email" } })
+                            @Html.ValidationMessageFor(model => model.Newsletter.Email, "", new { @class = "text-danger" })
 
-                    </div>   <div class="col-md-4"></div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
-                        <button class="btn btn-light newsletterbtn">Zapisz się!</button>
+                        </div>   <div class="col-md-4"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <input type="submit" value="Zapisz się!" class="btn btn-light newsletterbtn" />
+                        </div>
+                        <div class="col-md-4"></div>
                     </div>
-                    <div class="col-md-4"></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 
 
 
 
 
 @section scripts {
-
+    @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(document).ready(function () {
             $(".regular").slick({

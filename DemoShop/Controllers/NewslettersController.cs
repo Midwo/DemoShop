@@ -47,18 +47,21 @@ namespace DemoShop.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NewsletterID,Email,UniscribeCode")] Newsletter newsletter)
+        public ActionResult Create(Newsletter newsletter)
         {
             if (ModelState.IsValid)
             {
                 var check = db.Newsletters.Where(a => a.Email == newsletter.Email);
                 if (check.Count() < 1)
                 {
-                    newsletter.UniscribeCode = Guid.NewGuid().ToString();
+                    newsletter.UnscribeCode = Guid.NewGuid().ToString();
+                    UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
+                    string url = u.Action("UnscribePage", "Newsletters",  new { email = newsletter.Email, code = newsletter.UnscribeCode }, Request.Url.Scheme);
+                    newsletter.UnscribeLink = url;
                     db.Newsletters.Add(newsletter);
                     db.SaveChanges();
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(newsletter);
@@ -84,7 +87,7 @@ namespace DemoShop.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NewsletterID,Email,UniscribeCode")] Newsletter newsletter)
+        public ActionResult Edit([Bind(Include = "NewsletterID,Email,UnscribeCode")] Newsletter newsletter)
         {
             if (ModelState.IsValid)
             {
@@ -122,13 +125,33 @@ namespace DemoShop.Controllers
         }
         // POST: Newsletters/Delete/5
         [HttpPost]
-        public ActionResult Uniscribe(string email, string code)
+        public ActionResult Unscribe(string email, string code)
         {
-            Newsletter newsletter = db.Newsletters.Where(a => a.Email == email && a.UniscribeCode == code) as Newsletter;
-            db.Newsletters.Remove(newsletter);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            Newsletter newsletter = db.Newsletters.SingleOrDefault(i => i.Email == email && i.UnscribeCode == code);
+            if (newsletter != null)
+            {
+                db.Newsletters.Remove(newsletter);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return Content("Błędne dane");
         }
+        
+        public ActionResult UnscribePage(string email, string code)
+        {
+
+            Newsletter newsletter = db.Newsletters.SingleOrDefault(i => i.Email == email && i.UnscribeCode == code);
+            if (newsletter != null)
+            {
+                db.Newsletters.Remove(newsletter);
+                db.SaveChanges();
+                return Content("Usunięto adres email z listy newsletter");
+
+            }
+            return Content("Błędne dane");
+        }
+
 
         protected override void Dispose(bool disposing)
         {

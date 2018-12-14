@@ -568,5 +568,24 @@ namespace DemoShop.Controllers
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult Excel()
+        {
+            ExcelViewModel model = new ExcelViewModel();
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public FileContentResult ExportToExcel()
+        {
+            List<Newsletter> savedUserNewsletters = EpPlusExcelStaticList.SavedUserNewsletters;
+            string[] columns = { "Email", "UnscribeCode", "UnscribeLink" };
+            byte[] filecontent = ExcelExportHelper.ExportExcel(savedUserNewsletters, "Newsletter", true, columns);
+            return File(filecontent, ExcelExportHelper.ExcelContentType, "Technologies.xlsx");
+        }
+
     }
 }

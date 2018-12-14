@@ -26,7 +26,7 @@ namespace DemoShop.Migrations
                     {
                         NewsletterID = c.Int(nullable: false, identity: true),
                         Email = c.String(nullable: false),
-                        UniscribeCode = c.String(),
+                        UnscribeCode = c.String(),
                     })
                 .PrimaryKey(t => t.NewsletterID);
             

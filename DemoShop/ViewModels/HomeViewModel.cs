@@ -13,6 +13,7 @@ namespace DemoShop.ViewModels
         public IEnumerable<Product> TheBestProducts { get; set; }
         public IEnumerable<Product> NewProducts { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+        public Newsletter Newsletter { get; set; }
 
     }
 }

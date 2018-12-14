@@ -59,6 +59,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.2.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Glimpse.AspNet, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
@@ -162,6 +165,7 @@
     <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
       <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
@@ -176,6 +180,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
@@ -270,6 +275,7 @@
     <Compile Include="Infrastructure\DefaultCacheProvider.cs" />
     <Compile Include="Infrastructure\DetailCategoryDynamicNodeProvider.cs" />
     <Compile Include="Infrastructure\DetailProductDynamicNodeProvider.cs" />
+    <Compile Include="Infrastructure\ExcelExportHelper.cs" />
     <Compile Include="Infrastructure\HangFirePostalIMailService.cs" />
     <Compile Include="Infrastructure\Helpers.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
@@ -332,6 +338,14 @@
     <Compile Include="Migrations\201812120026000_editModelContact.Designer.cs">
       <DependentUpon>201812120026000_editModelContact.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812140248445_editNewsletterClass.cs" />
+    <Compile Include="Migrations\201812140248445_editNewsletterClass.Designer.cs">
+      <DependentUpon>201812140248445_editNewsletterClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812140323544_addUnscribeLinkInNewsletter.cs" />
+    <Compile Include="Migrations\201812140323544_addUnscribeLinkInNewsletter.Designer.cs">
+      <DependentUpon>201812140323544_addUnscribeLinkInNewsletter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CartData.cs" />
     <Compile Include="Models\Category.cs" />
@@ -349,6 +363,8 @@
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\EditAddProductViewModel.cs" />
     <Compile Include="ViewModels\EmailModels.cs" />
+    <Compile Include="ViewModels\EpPlusExcelStaticList.cs" />
+    <Compile Include="ViewModels\ExcelViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
@@ -632,11 +648,7 @@
     <Content Include="Views\Contacts\Details.cshtml" />
     <Content Include="Views\Contacts\Edit.cshtml" />
     <Content Include="Views\Contacts\Index.cshtml" />
-    <Content Include="Views\Newsletters\Create.cshtml" />
-    <Content Include="Views\Newsletters\Delete.cshtml" />
-    <Content Include="Views\Newsletters\Details.cshtml" />
-    <Content Include="Views\Newsletters\Edit.cshtml" />
-    <Content Include="Views\Newsletters\Index.cshtml" />
+    <Content Include="Views\Manage\Excel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -691,6 +703,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812120026000_editModelContact.resx">
       <DependentUpon>201812120026000_editModelContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812140248445_editNewsletterClass.resx">
+      <DependentUpon>201812140248445_editNewsletterClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812140323544_addUnscribeLinkInNewsletter.resx">
+      <DependentUpon>201812140323544_addUnscribeLinkInNewsletter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
