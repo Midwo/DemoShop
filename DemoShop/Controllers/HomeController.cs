@@ -15,9 +15,13 @@ namespace DemoShop.Controllers
     {
         //log with NLOG
         private static Logger logger = LogManager.GetCurrentClassLogger();
-
-        private DemoShopContext db = new DemoShopContext(); 
-        public ActionResult Index()
+        private DemoShopContext db = new DemoShopContext();
+        private IMailService mailService;
+        public HomeController(IMailService mailService)
+        {
+            this.mailService = mailService;
+        }
+        public ActionResult Index(bool? error)
         {
             List<Product> ListProduct;
             List<Category> ListCategory;
@@ -69,7 +73,7 @@ namespace DemoShop.Controllers
             }
             else
             {
-                ListProduct = db.Products.Where(a => a.Active == true).OrderByDescending(a=> a.AddDate).Take(4).ToList();
+                ListProduct = db.Products.Where(a => a.Active == true).OrderByDescending(a => a.AddDate).Take(4).ToList();
                 ListProduct = ListProduct.OrderBy(a => Guid.NewGuid()).ToList();
                 foreach (var item in ListProduct)
                 {
@@ -118,7 +122,10 @@ namespace DemoShop.Controllers
                 Promotions = promotions
             };
 
-        
+            if (error == true)
+            {
+                ModelState.AddModelError("EmailError", "Błedny adres Email");
+            }
 
             return View(mergeViewModel);
         }
@@ -130,11 +137,53 @@ namespace DemoShop.Controllers
             return View(viewname);
         }
 
-        //public ActionResult Contact()
-        //{
-        //    ViewBag.Message = "Your contact page.";
+        // POST: Home/CreateContact
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateContact([Bind(Include = "ContactID,Name,Email,Phone,Message,SentAnswer")] Contact contact)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Contacts.Add(contact);
+                db.SaveChanges();
+                return RedirectToAction("index");
+            }
 
-        //    return View();
-        //}
+            return View("kontakt");
+        }
+        // GET:  Home/CreateContact
+        public ActionResult CreateContact()
+        {
+            return View("kontakt");
+        }
+        public ActionResult SavedNewsletter()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SavedNewsletter(Newsletter newsletter)
+        {
+            if (ModelState.IsValid)
+            {
+                var check = db.Newsletters.Where(a => a.Email == newsletter.Email);
+                if (check.Count() < 1)
+                {
+                    newsletter.UnscribeCode = Guid.NewGuid().ToString();
+                    mailService.SendNewsletterWelcomeEmail(newsletter);
+                    UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
+                    string url = u.Action("UnscribePage", "Manage", new { email = newsletter.Email, code = newsletter.UnscribeCode }, Request.Url.Scheme);
+                    newsletter.UnscribeLink = url;
+                    db.Newsletters.Add(newsletter);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            bool error = true;
+            return RedirectToAction("Index", "Home", new { error });
+        }
+
     }
 }

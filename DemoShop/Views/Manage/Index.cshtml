@@ -69,22 +69,38 @@
                     </div>
                     <div class="col-md-6 col-12 col-sm-12">
                         <h2 class="text-center">Przesyłki:</h2>
-                        <a href="@Url.Action("AdminNewViewOfOrder","Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Oczekujące zamówienia</span></a>
-                        <a href="@Url.Action("AdminShippedViewOfOrder","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wysłane zamówienia</span></a>
-                        <a href="@Url.Action("AdminCanceledViewOfOrder","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Anulowane zamówienia</span></a>
-                        <a href="@Url.Action("AdminAllViewOfOrder","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wszystkie zamówienia</span></a>
+                        <a href="@Url.Action("AdminNewViewOfOrder", "Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Oczekujące zamówienia</span></a>
+                        <a href="@Url.Action("AdminShippedViewOfOrder", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wysłane zamówienia</span></a>
+                        <a href="@Url.Action("AdminCanceledViewOfOrder", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Anulowane zamówienia</span></a>
+                        <a href="@Url.Action("AdminAllViewOfOrder", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wszystkie zamówienia</span></a>
                     </div>
-
+                    <div class="col-md-12 col-12 col-sm-12" style="margin-top:15px;">
+                        <hr />
+                    </div>
                     <div class="col-md-6 col-12 col-sm-12">
                         <h2 class="text-center">Zarządzanie produktami:</h2>
-                        <a href="@Url.Action("UpdateOrAddProduct","Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Dodaj nowy produkt</span></a>
-                        <a href="@Url.Action("DisabledProduct","Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wyłączone produkty</span></a>
+                        <a href="@Url.Action("UpdateOrAddProduct", "Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Dodaj nowy produkt</span></a>
+                        <a href="@Url.Action("DisabledProduct", "Manage")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wyłączone produkty</span></a>
                         <a href="@Url.Content("~/elmah")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Logi błędów</span></a>
                         <a href="@Url.Content("~/hangfire")" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Zadania</span></a>
 
                     </div>
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <h2 class="text-center">Pytania klientów:</h2>
+                        <a href="@Url.Action("Index", "Contacts")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Lista wszystkich pytań</span></a>
+                        <a href="@Url.Action("Index", "Contacts", new { state = false })" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Oczekujące</span></a>
+                        <a href="@Url.Action("Index","Contacts", new { state = true})" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Wysłane</span></a>
 
+                    </div>
+                    <div class="col-md-12 col-12 col-sm-12" style="margin-top:15px;">
+                        <hr />
+                    </div>
+                    <div class="col-md-12 col-12 col-sm-12" style="margin:auto;">
+                        <h2 class="text-center">Newsletter:</h2>
+                        <a href="@Url.Action("Excel", "Manage")" class="btn btn-secondary btn-lg btn-block"><span style="font-size:120%; color:white;">Raport zapisanych osób</span></a>
+                        @* <a href="@Url.Action("Index", "Contacts", new { state = false })" class="btn btn-light btn-lg btn-block"><span style="font-size:120%;">Oczekujące</span></a>*@
 
+                    </div>
                 }
                 else
                 {

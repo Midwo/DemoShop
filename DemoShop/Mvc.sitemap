@@ -48,6 +48,16 @@
       </mvcSiteMapNode>
       <mvcSiteMapNode title="Lista produktów nieaktywnych" controller="Manage" action="DisabledProduct">
       </mvcSiteMapNode>
+      <mvcSiteMapNode title="Raport zapisanych osób newsletter" controller="Manage" action="Excel">
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Pytania klientów" controller="Contacts" action="index">
+        <mvcSiteMapNode title="Edycja" controller="Contacts" action="Edit">
+        </mvcSiteMapNode>
+        <mvcSiteMapNode title="Detale" controller="Contacts" action="Details">
+        </mvcSiteMapNode>
+        <mvcSiteMapNode title="Usuwanie" controller="Contacts" action="Delete">
+        </mvcSiteMapNode>
+      </mvcSiteMapNode>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

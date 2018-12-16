@@ -1,0 +1,69 @@
+﻿@model DemoShop.Models.Contact
+@using DemoShop.Infrastructure
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-info">
+    <div class="row container_content">
+        <div class="col-12 text-center UpSiteMapIconLogin"> <spam id="ManageMenuSiteMap">@Html.MvcSiteMap().SiteMapPath()</spam></div>
+        <div class="col-12 UnderSiteMapIconLogin"><img alt="Obraz konta" src="@Url.Icons("icons8-contact-100.png")" /></div>
+    </div>
+</section>
+<section class="bg-white moreMargin" style="margin-top:50px;">
+    <div class="row container_content">
+        <div class="col-md-12 col-12 col-sm-12">
+
+            <div>
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Message)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Message)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SentAnswer)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SentAnswer)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Edytuj", "Edit", new { Contactid = Model.ContactID }) |
+                @Html.ActionLink("Wróć do listy", "Index")
+            </p>
+        </div>
+    </div>
+</section>

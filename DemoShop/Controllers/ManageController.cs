@@ -1,10 +1,12 @@
 ﻿using DemoShop.App_Start;
 using DemoShop.DAL;
+using DemoShop.Infrastructure;
 using DemoShop.Models;
 using DemoShop.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,7 +22,16 @@ namespace DemoShop.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private DemoShopContext db = new DemoShopContext();
+        private IMailService mailService;
+
+        public ManageController(IMailService mailService)
+        {
+            this.mailService = mailService;
+        }
+
+
         public async Task<ActionResult> ProfileAddress(ManageMessageId? message)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -40,6 +51,7 @@ namespace DemoShop.Controllers
 
         public ActionResult Index(ManageMessageId? message)
         {
+            logger.Info("Włączono panel zarządzania kontami");
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Hasło zostało zmienione"
                 : message == ManageMessageId.SetPasswordSuccess ? "Hasło zostało ustawione"
@@ -356,7 +368,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Canceled).OrderBy(a => a.DateCreated).Take(10);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Canceled).OrderByDescending(a => a.DateCreated).Take(10);
             return View("AdminNewViewOfOrder", userOrders);
         }
         [Authorize(Roles = "Admin")]
@@ -365,7 +377,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Shipped).OrderBy(a => a.DateCreated).Take(10);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Shipped).OrderByDescending(a => a.DateCreated).Take(10);
             return View("AdminNewViewOfOrder", userOrders);
         }
 
@@ -375,7 +387,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").OrderBy(a => a.DateCreated).Take(100);
+            userOrders = db.Orders.Include("OrderItems").OrderByDescending(a => a.DateCreated).Take(100);
             return View("AdminNewViewOfOrder", userOrders);
         }
 
@@ -384,11 +396,11 @@ namespace DemoShop.Controllers
         {
             List<Product> ProductList;
             var List = db.Products;
-          
-            
+
+
             ProductList = List.Where(a => a.Active == false).ToList();
-            
-          
+
+
             foreach (var item in ProductList)
             {
                 if (item.Description.Length >= 60)
@@ -503,10 +515,11 @@ namespace DemoShop.Controllers
             if (orderToModify.State == State.Shipped)
             {
                 orderToModify.DateShipped = DateTime.Now;
+                mailService.SendOrderShippedEmail(orderToModify);
             }
             else if (orderToModify.State == State.Canceled)
             {
-
+                mailService.SendOrderCanceledEmail(orderToModify);
             }
             db.SaveChanges();
             return order.State;
@@ -527,5 +540,99 @@ namespace DemoShop.Controllers
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+        [AllowAnonymous]
+        public ActionResult SendOrderConfirmationEmail(int orderID, string surname)
+        {
+            var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            OrderSendedEmail email = new OrderSendedEmail();
+            email.To = order.Email;
+            email.Cost = order.SummaryPrice;
+            email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        [AllowAnonymous]
+        public ActionResult SendNewsletterEmail(string emailTo, string code)
+        {
+            var dataNewsletter = db.Newsletters.SingleOrDefault(a => a.Email == emailTo && a.UnscribeCode == code);
+
+            if (dataNewsletter == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            NewsletterWelcomeEmail email = new NewsletterWelcomeEmail();
+            email.To = dataNewsletter.Email;
+            email.Code = dataNewsletter.UnscribeCode;
+            email.Email = dataNewsletter.Email;
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        [AllowAnonymous]
+        public ActionResult SendOrderCanceledEmail(int orderID, string surname)
+        {
+            var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            OrderCanceledEmail email = new OrderCanceledEmail();
+            email.To = order.Email;
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult Excel()
+        {
+            ExcelViewModel model = new ExcelViewModel();
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public FileContentResult ExportToExcel()
+        {
+            List<Newsletter> savedUserNewsletters = EpPlusExcelStaticList.SavedUserNewsletters;
+            string[] columns = { "Email", "UnscribeCode", "UnscribeLink" };
+            byte[] filecontent = ExcelExportHelper.ExportExcel(savedUserNewsletters, "Newsletter", true, columns);
+            return File(filecontent, ExcelExportHelper.ExcelContentType, "NewsletterListEmail.xlsx");
+        }
+
+
+        //POST: Newsletters/Delete/email=x? code = x
+       [AllowAnonymous]
+       [HttpPost]
+        public ActionResult Unscribe(string email, string code)
+        {
+
+            Newsletter newsletter = db.Newsletters.SingleOrDefault(i => i.Email == email && i.UnscribeCode == code);
+            if (newsletter != null)
+            {
+                db.Newsletters.Remove(newsletter);
+                db.SaveChanges();
+                return Content("Usunięto adres email z listy newsletter");
+            }
+            return Content("Błędne dane");
+        }
+
+        [AllowAnonymous]
+        public ActionResult UnscribePage(string email, string code)
+        {
+
+            Newsletter newsletter = db.Newsletters.SingleOrDefault(i => i.Email == email && i.UnscribeCode == code);
+            if (newsletter != null)
+            {
+                db.Newsletters.Remove(newsletter);
+                db.SaveChanges();
+                return Content("Usunięto adres email z listy newsletter");
+
+            }
+            return Content("Błędne dane");
+        }
+
     }
 }

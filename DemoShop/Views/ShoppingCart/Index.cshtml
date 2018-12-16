@@ -22,7 +22,7 @@
         <div class="container" id="cart-row-@item.Product.ProductID">
             <div class="row divmarginauto">
                 <div class="col-lg-2 text-center">
-                    <a href="@Url.Action("Details", "Store", new { id = item.Product.ProductID})">
+                    <a href="@Url.Action("Details", "Store" , new { id=item.Product.ProductID})">
                         <img class="img-cart" src="@Url.Products(item.Product.FileNamePhoto)">
                     </a>
                 </div>

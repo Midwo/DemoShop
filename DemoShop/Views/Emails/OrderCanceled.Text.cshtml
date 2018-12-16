@@ -1,0 +1,14 @@
+﻿@model DemoShop.ViewModels.OrderCanceledEmail
+    Content-Type: text/plain; charset=utf-8
+
+
+    Witaj,
+    Z przykrością informujemy, że Twoje zamówienie zostało anulowane w sklepie demonstracyjnym "DemoShop".
+
+    W razie jakichkolwiek pytań prosimy o kontakt pod adresem: michal.dwojak92@gmail.com
+
+    Śledzenie statusów przesyłek możliwe jest pod linkiem:
+
+@Url.Action("ViewOfOrderHistory", "Manage", null, "https")
+
+    Copyright © 2018 DemoShop All rights reserved.

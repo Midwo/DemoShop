@@ -82,12 +82,12 @@
                             {
                                 <tbody>
                                     <tr>
-                                        <td> <a href="@Url.Action("Details", "Store", new { id = OrderItem.Product.ProductID})"> <img class="img-cart" style="width:90px; height:90px;" src="@Url.Products(OrderItem.Product.FileNamePhoto)"></a></td>
+                                        <td> <a href="@Url.Action("Details", "Store" , new { id=OrderItem.Product.ProductID})"> <img class="img-cart" style="width:90px; height:90px;" src="@Url.Products(OrderItem.Product.FileNamePhoto)"></a></td>
                                         <td>@OrderItem.Product.ProductTitle</td>
                                         <td>@OrderItem.SinglePrice</td>
                                         <td>@OrderItem.Quantity</td>
                                         <td>@(OrderItem.SinglePrice * OrderItem.Quantity)</td>
-                                        <td><a class="btn btn-dark" style="width:100%;" href="@Url.Action("Details", "Store", new { id = OrderItem.Product.ProductID})">Zobacz</a></td>
+                                        <td><a class="btn btn-dark" style="width:100%;" href="@Url.Action("Details", "Store" , new { id=OrderItem.Product.ProductID})">Zobacz</a></td>
                                     </tr>
                                 </tbody>
                             }
@@ -103,7 +103,7 @@
                     <h1>Nie ma żadnych zamówień</h1>
                 </div>
             }
-       
+
 
 
         </div>

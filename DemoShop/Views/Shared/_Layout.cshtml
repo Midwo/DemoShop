@@ -3,13 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=egde,chrome=1" />
+
     <title>@*@ViewBag.Title*@ Sklep demonstracyjny Michał Dwojak</title>
+    <meta name="description" content="MD DemoShop- wersja demo" />
+    <meta name="keywords" content="Dwojak Michał, DemoShop, Demo, Portfolio, MVC, Dwojak, Michał" />
 
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @System.Web.Optimization.Styles.Render("~/Content/themes/base/css")
-
+    @System.Web.Optimization.Styles.Render("~/mdwojak.ico")
 </head>
 <body>
     <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
@@ -41,7 +45,7 @@
                     </li>*@
             </ul>
             <ul class="nav navbar-nav navbar-right">
-          @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
 
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index","ShoppingCart")">
@@ -84,7 +88,7 @@
 
     <div id="wrapper">
 
-    @RenderBody()
+        @RenderBody()
 
     </div>
 

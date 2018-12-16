@@ -1,0 +1,15 @@
+﻿@model DemoShop.ViewModels.NewsletterWelcomeEmail
+Content-Type: text/plain; charset=utf-8
+
+Witaj,
+Zapisałeś się do newslelettera w sklepie „DemoShop”.
+
+Powiadamiamy jedynie o świetnych promocjach wartych Twojej uwagi w naszym sklepie.
+
+W najbliższym czasie otrzymasz ofertę promocji jak i nowości z naszego sklepu, gdy tylko takie się pojawią.
+
+Jeśli nie powinieneś otrzymać tej wiadomości, bądź chcesz zrezygnować z otrzymywania nowych, skorzystaj z linku poniżej:
+
+@Url.Action("UnscribePage", "Manage", new { email = @Model.Email, code = @Model.Code }, "https")
+
+Copyright © 2018 DemoShop All rights reserved.
