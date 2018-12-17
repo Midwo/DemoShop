@@ -6,9 +6,12 @@ using DemoShop.ViewModels;
 using Hangfire;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +25,8 @@ namespace DemoShop.Controllers
         private DemoShopContext db = new DemoShopContext();
         private IMailService mailService;
         private InterfaceSessionManager sessionManager;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         // GET: ShoppingCard
 
         public ShoppingCartController(IMailService mailService, InterfaceSessionManager sessionManager)
@@ -141,7 +146,7 @@ namespace DemoShop.Controllers
                 ///BackgroundJob.Enqueue(() => Helpers.CallUrl(url));
                 this.mailService.SendOrderConfirmationEmail(order);
 
-                return RedirectToAction("OrderConfirmation");
+                return RedirectToAction("PaymentPage", order);
 
             }
             else
@@ -151,13 +156,103 @@ namespace DemoShop.Controllers
 
 
         }
-
+        public ActionResult PaymentPage(Order order)
+        {
+            string inputText = "2321312" + order.SummaryPrice.ToString().Replace(",", ".") + order.OrderID + "234234234234";
+            ViewBag.SumMD5 = CreateMD5(inputText);
+            return View(order);
+        }
 
         public ActionResult OrderConfirmation()
         {
+
             return View();
         }
 
+        public static string CreateMD5(string input)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
 
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
+
+        public ActionResult PaymentSuccess()
+        {
+            return View();
+        }
+        public ActionResult PaymentError()
+        {
+            return View();
+        }
+        public ActionResult Report()
+        {
+            string id = Request.Form["id"];
+            string trId = Request.Form["tr_id"];
+            string trDate = Request.Form["tr_date"];
+            string trCRC = Request.Form["tr_crc"];
+            string trAmount = Request.Form["tr_amount"];
+            string trPaid = Request.Form["tr_paid"];
+            string trDesc = Request.Form["tr_desc"];
+            string trStatus = Request.Form["tr_status"];
+            string trError = Request.Form["tr_error"];
+            string trEmail = Request.Form["tr_email"];
+            string md5Sum = Request.Form["md5sum"];
+
+            if (!ContainsNullOrEmptyString(id, trId, trDate, trAmount, trCRC))
+            {
+                Response.Write("TRUE");
+
+                //Payment payment = GetPayment(trCRC);
+
+                bool isSuccessful = IsValid(md5Sum, trId, trAmount, trCRC);
+
+                if (isSuccessful == true)
+                {
+                    logger.Info("Wykonano prawidłowo płatność");
+                }
+                else 
+                {
+                    logger.Info("Nie wykonano prawidłowo płatności");
+                }
+            }
+
+            return View();
+        }
+        private bool ContainsNullOrEmptyString(params string[] strings)
+        {
+            var IsEmpty = false;
+            foreach (var item in strings.ToList())
+            {
+                IsEmpty = String.IsNullOrEmpty(item) ? true : IsEmpty;
+            }
+
+            return IsEmpty;
+        }
+        public bool IsValid(string md5Sum, string id, string amount, string crc)
+        {
+            string inputText = "32423" + id + amount.ToString().Replace(",", ".") + crc + "234234234";
+            string Md5String = CreateMD5(inputText);
+
+            if (md5Sum.ToLower() == Md5String.ToLower())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
+
 }

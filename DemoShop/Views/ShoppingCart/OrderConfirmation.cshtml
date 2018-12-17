@@ -7,3 +7,16 @@
 <h2>OrderConfirmation</h2>
 Wysłano paczkę
 
+<form action="https://secure.tpay.com" method="post" name="payment">
+    @Html.Hidden("id", "35865")
+    @Html.Hidden("kwota", "15.99")
+    @Html.Hidden("opis", "Platnosc")
+    @Html.Hidden("email", "email@o2.pl")
+    @Html.Hidden("nazwisko", "Janusz Tracz")
+    @Html.Hidden("crc", "1234")
+    @Html.Hidden("pow_url", "https://www.bing.com")
+    @Html.Hidden("pow_url_blad", "https://pl.wikipedia.org/wiki/Rezerwat_biosfery_Dana")
+    @Html.Hidden("md5sum", "c5845760efe0fedfac3fe19cd6bb60f6")
+    @Html.Hidden("wyn_url", "https://www.bing.com")
+    <input type="submit" value="Zapłać" />
+</form>

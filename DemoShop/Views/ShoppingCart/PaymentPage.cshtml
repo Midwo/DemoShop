@@ -1,0 +1,69 @@
+﻿@model DemoShop.Models.Order
+
+@{
+    ViewBag.Title = "PaymentPage";
+    Layout = "~/Views/Shared/_UnderLayoutWithMain.cshtml";
+}
+
+<div class="row container_content" style="margin-top:30px;">
+    <h3 style="margin:auto; padding-bottom: 30px;">Podsumowanie</h3>
+    <div class="col-md-12 col-12 col-sm-12">
+        <table class="table" style="margin:auto; max-width: 800px;">
+            <thead>
+                <tr>
+                    <th>Dane</th>
+                    <th>Wybrane</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Adres dostarczenia:</td>
+                    <td>@Model.Country - @Model.City @Model.CityCode, @Model.Street @Model.ApartmentNumber</td>
+                </tr>
+                <tr>
+                    <td>Uwagi:</td>
+                    <td>
+                        @if (Model.Comment != null)
+                        {@Html.DisplayFor(a => a.Comment)}
+                    else
+                    {<text>Brak uwag</text>}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:aquamarine;">Cena z dostawą:</td>
+                    <td style="background-color:aquamarine;">@Html.DisplayFor(a => a.SummaryPrice) zł</td>
+                </tr>
+
+                <tr>
+
+                    <td></td>
+                    <td>
+                        <form action="https://secure.tpay.com" method="post" name="payment">
+                            @Html.Hidden("id", "35865")
+                            @Html.Hidden("kwota", Model.SummaryPrice.ToString().Replace(",", "."))
+                            @Html.Hidden("opis", "Platnosc DemoShop")
+                            @Html.Hidden("email", Model.Email)
+                            @Html.Hidden("nazwisko", Model.Surname)
+                            @Html.Hidden("crc", Model.OrderID + "")
+                            @Html.Hidden("pow_url", Url.Action("PaymentSuccess", "ShoppingCart",null ,Request.Url.Scheme))
+                            @Html.Hidden("pow_url_blad", Url.Action("PaymentError", "ShoppingCart", null,Request.Url.Scheme))
+                            @Html.Hidden("md5sum", (string)ViewBag.SumMD5)
+                            @Html.Hidden("wyn_url", Url.Action("Report", "ShoppingCart", null, Request.Url.Scheme))
+                            <input type="submit" class="btn btn-dark" value="Potwierdź" style="width: 100%;" />
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

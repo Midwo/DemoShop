@@ -646,6 +646,10 @@
     <Content Include="Views\Emails\OrderSended.Html.cshtml" />
     <Content Include="Views\Emails\OrderSended.Text.cshtml" />
     <Content Include="Views\Manage\Excel.cshtml" />
+    <Content Include="Views\ShoppingCart\PaymentPage.cshtml" />
+    <Content Include="Views\ShoppingCart\PaymentSuccess.cshtml" />
+    <Content Include="Views\ShoppingCart\PaymentError.cshtml" />
+    <Content Include="Views\ShoppingCart\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
