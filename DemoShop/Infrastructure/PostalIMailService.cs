@@ -9,6 +9,15 @@ namespace DemoShop.Infrastructure
 {
     public class PostalIMailService : IMailService
     {
+        public void SendCompletedOrderEmail(Order order)
+        {
+            CompletedOrderEmail email = new CompletedOrderEmail();
+            email.To = order.Email;
+            email.Cost = order.SummaryPrice;
+            email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);
+            email.Send();
+        }
+
         public void SendNewsletterWelcomeEmail(Newsletter newsletter)
         {
             NewsletterWelcomeEmail email = new NewsletterWelcomeEmail();

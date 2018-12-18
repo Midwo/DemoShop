@@ -337,6 +337,10 @@
     <Compile Include="Migrations\201812160149313_NewTableContactAndNewsletter.Designer.cs">
       <DependentUpon>201812160149313_NewTableContactAndNewsletter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812170232346_AddPaymentState.cs" />
+    <Compile Include="Migrations\201812170232346_AddPaymentState.Designer.cs">
+      <DependentUpon>201812170232346_AddPaymentState.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CartData.cs" />
     <Compile Include="Models\Category.cs" />
@@ -366,6 +370,7 @@
     <Content Include="Content\About\pexels-photo-356830.jpeg" />
     <Content Include="Content\About\pexels-photo-417382.jpeg" />
     <Content Include="Content\About\pexels-photo-723900.jpeg" />
+    <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -529,6 +534,8 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Mvc.sitemap" />
+    <Content Include="Content\fonts\slick.ttf" />
+    <Content Include="Content\fonts\slick.woff" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -650,6 +657,9 @@
     <Content Include="Views\ShoppingCart\PaymentSuccess.cshtml" />
     <Content Include="Views\ShoppingCart\PaymentError.cshtml" />
     <Content Include="Views\ShoppingCart\Report.cshtml" />
+    <Content Include="Views\Emails\CompletedOrder.cshtml" />
+    <Content Include="Views\Emails\CompletedOrder.Html.cshtml" />
+    <Content Include="Views\Emails\CompletedOrder.Text.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -704,6 +714,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812160149313_NewTableContactAndNewsletter.resx">
       <DependentUpon>201812160149313_NewTableContactAndNewsletter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812170232346_AddPaymentState.resx">
+      <DependentUpon>201812170232346_AddPaymentState.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

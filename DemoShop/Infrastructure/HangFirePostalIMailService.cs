@@ -12,6 +12,14 @@ namespace DemoShop.Infrastructure
 
     public class HangFirePostalIMailService : IMailService
     {
+        public void SendCompletedOrderEmail(Order order)
+        {
+            var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            string url = urlHelper.Action("SendCompletedOrderEmail", "Manage", new { orderID = order.OrderID, surname = order.Surname }, HttpContext.Current.Request.Url.Scheme);
+
+            BackgroundJob.Enqueue(() => Helpers.CallUrl(url));
+        }
+
         public void SendNewsletterWelcomeEmail(Newsletter newsletter)
         {
             var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);

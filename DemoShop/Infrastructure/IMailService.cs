@@ -16,6 +16,6 @@ namespace DemoShop.Infrastructure
 
         void SendNewsletterWelcomeEmail(Newsletter newsletter);
 
-        //void SendContactEmail();
+        void SendCompletedOrderEmail(Order order);
     }
 }

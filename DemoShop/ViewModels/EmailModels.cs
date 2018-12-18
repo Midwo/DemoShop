@@ -31,4 +31,10 @@ namespace DemoShop.ViewModels
         public string Email { get; set; }
         public string Code { get; set; }
     }
+    public class CompletedOrderEmail : Email
+    {
+        public string To { get; set; }
+        public decimal Cost { get; set; }
+        public string Address { get; set; }
+    }
 }

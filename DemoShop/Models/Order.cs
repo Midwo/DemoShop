@@ -77,6 +77,8 @@ namespace DemoShop.Models
         [Display(Name = "Koszt przesyłki")]
         public decimal ShippingCost { get; set; }
 
+        public bool PaymentState { get; set; }
+
         public ICollection<OrderItem> OrderItems { get; set; }
 
 

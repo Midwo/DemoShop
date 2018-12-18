@@ -333,7 +333,7 @@ namespace DemoShop.Controllers
         {
             var userId = User.Identity.GetUserId();
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Where(p => p.UserId == userId).Where(a => a.State == State.New).Include("OrderItems").OrderByDescending(a => a.DateCreated);
+            userOrders = db.Orders.Where(p => p.UserId == userId).Where(a => a.State == State.New && a.PaymentState == true).Include("OrderItems").OrderByDescending(a => a.DateCreated);
             return View("ViewOfOrderHistory", userOrders);
         }
 
@@ -359,7 +359,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.New).OrderBy(a => a.DateCreated).Take(100);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.New && a.PaymentState == true).OrderBy(a => a.DateCreated).Take(100);
             return View(userOrders);
         }
         [Authorize(Roles = "Admin")]
@@ -368,7 +368,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Canceled).OrderByDescending(a => a.DateCreated).Take(10);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Canceled && a.PaymentState == true).OrderByDescending(a => a.DateCreated).Take(10);
             return View("AdminNewViewOfOrder", userOrders);
         }
         [Authorize(Roles = "Admin")]
@@ -377,7 +377,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Shipped).OrderByDescending(a => a.DateCreated).Take(10);
+            userOrders = db.Orders.Include("OrderItems").Where(a => a.State == State.Shipped && a.PaymentState == true).OrderByDescending(a => a.DateCreated).Take(10);
             return View("AdminNewViewOfOrder", userOrders);
         }
 
@@ -387,7 +387,7 @@ namespace DemoShop.Controllers
             //bool isAdmin = User.IsInRole("Admin");
 
             IEnumerable<Order> userOrders;
-            userOrders = db.Orders.Include("OrderItems").OrderByDescending(a => a.DateCreated).Take(100);
+            userOrders = db.Orders.Where(a => a.PaymentState == true).Include("OrderItems").OrderByDescending(a => a.DateCreated).Take(100);
             return View("AdminNewViewOfOrder", userOrders);
         }
 
@@ -515,11 +515,11 @@ namespace DemoShop.Controllers
             if (orderToModify.State == State.Shipped)
             {
                 orderToModify.DateShipped = DateTime.Now;
-                mailService.SendOrderShippedEmail(orderToModify);
+                this.mailService.SendOrderShippedEmail(orderToModify);
             }
             else if (orderToModify.State == State.Canceled)
             {
-                mailService.SendOrderCanceledEmail(orderToModify);
+                this.mailService.SendOrderCanceledEmail(orderToModify);
             }
             db.SaveChanges();
             return order.State;
@@ -541,13 +541,43 @@ namespace DemoShop.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
         [AllowAnonymous]
-        public ActionResult SendOrderConfirmationEmail(int orderID, string surname)
+        public ActionResult SendOrderShippedEmail(int orderID, string surname)
         {
             var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
 
             if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
             OrderSendedEmail email = new OrderSendedEmail();
+            email.To = order.Email;
+            email.Cost = order.SummaryPrice;
+            email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        [AllowAnonymous]
+        public ActionResult SendOrderConfirmationEmail(int orderID, string surname)
+        {
+            var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            OrderConfirmationEmail email = new OrderConfirmationEmail();
+            email.To = order.Email;
+            email.Cost = order.SummaryPrice;
+            email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        [AllowAnonymous]
+        public ActionResult SendCompletedOrderEmail(int orderID, string surname)
+        {
+            var order = db.Orders.Include("OrderItems").SingleOrDefault(a => a.OrderID == orderID && a.Surname == surname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            CompletedOrderEmail email = new CompletedOrderEmail();
             email.To = order.Email;
             email.Cost = order.SummaryPrice;
             email.Address = string.Format("{0}  {1} {2}, {3}, {4}", order.Country, order.City, order.CityCode, order.Street, order.ApartmentNumber);

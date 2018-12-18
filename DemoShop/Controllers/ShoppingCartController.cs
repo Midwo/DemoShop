@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -158,9 +159,17 @@ namespace DemoShop.Controllers
         }
         public ActionResult PaymentPage(Order order)
         {
-            string inputText = "2321312" + order.SummaryPrice.ToString().Replace(",", ".") + order.OrderID + "234234234234";
+            string inputText = "asdasd" + order.SummaryPrice.ToString().Replace(",", ".") + order.OrderID + "adsds2q344234234234";
             ViewBag.SumMD5 = CreateMD5(inputText);
             return View(order);
+        }
+
+        public ActionResult PaymentPageID(int orderID)
+        {
+
+            var order = db.Orders.SingleOrDefault(a => a.OrderID == orderID);
+
+            return RedirectToAction("PaymentPage", "ShoppingCart", order);
         }
 
         public ActionResult OrderConfirmation()
@@ -213,15 +222,25 @@ namespace DemoShop.Controllers
             {
                 Response.Write("TRUE");
 
-                //Payment payment = GetPayment(trCRC);
+
 
                 bool isSuccessful = IsValid(md5Sum, trId, trAmount, trCRC);
 
                 if (isSuccessful == true)
                 {
                     logger.Info("Wykonano prawidłowo płatność");
+                    int OrderID = Int32.Parse(trCRC);
+                    Order order = db.Orders.SingleOrDefault(a => a.OrderID == OrderID);
+                    this.mailService.SendCompletedOrderEmail(order);
+
+                    order.PaymentState = true;   
+   
+                    db.Entry(order).State = EntityState.Modified;
+                    db.SaveChanges();
+
+
                 }
-                else 
+                else
                 {
                     logger.Info("Nie wykonano prawidłowo płatności");
                 }
@@ -241,7 +260,7 @@ namespace DemoShop.Controllers
         }
         public bool IsValid(string md5Sum, string id, string amount, string crc)
         {
-            string inputText = "32423" + id + amount.ToString().Replace(",", ".") + crc + "234234234";
+            string inputText = "asdasd" + id + amount.ToString().Replace(",", ".") + crc + "adsds2q344234234234";
             string Md5String = CreateMD5(inputText);
 
             if (md5Sum.ToLower() == Md5String.ToLower())

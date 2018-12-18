@@ -172,7 +172,7 @@ namespace DemoShop.Controllers
                 if (check.Count() < 1)
                 {
                     newsletter.UnscribeCode = Guid.NewGuid().ToString();
-                    mailService.SendNewsletterWelcomeEmail(newsletter);
+                    this.mailService.SendNewsletterWelcomeEmail(newsletter);
                     UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
                     string url = u.Action("UnscribePage", "Manage", new { email = newsletter.Email, code = newsletter.UnscribeCode }, Request.Url.Scheme);
                     newsletter.UnscribeLink = url;

@@ -1,4 +1,4 @@
-﻿@model DemoShop.ViewModels.OrderConfirmationEmail
+﻿@model DemoShop.ViewModels.CompletedOrderEmail
 Content-Type: text/html; charset=utf-8
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -553,11 +553,13 @@ Content-Type: text/html; charset=utf-8
 
                                                                 <h1>
                                                                     Witaj,<br />
-                                                                    <span style="font-size:18px">Dokonałeś testowego zakupu w sklepie "DemoShop".</span>
+                                                                    <span style="font-size:18px">
+                                                                        Dziękujemy za dokonanie płatności w "DemoShop".
+                                                                    </span>
                                                                 </h1>
                                                                 <p style="color: #222222;">
-                                                                    Twoje zamówienie jest aktualnie w fazie weryfikacyjnej i oczekuje na płatność. Wykonałeś zakupy na kwotę: @Model.Cost zł. Dokonane zakupy zostaną wysłane pod adres: @Model.Address.
-                                                                    Po opłaceniu (wirtualnie, przez testowe płatności (bez używania banku))<br />
+                                                                    Twoje zamówienie jest aktualnie w fazie weryfikacyjnej i zasotało opłacone. Wykonałeś zakupy na kwotę: @Model.Cost zł. Dokonane zakupy zostaną wysłane pod adres: @Model.Address.
+                                                                    <br />
                                                                     <br />
                                                                     W celu śledzenia zamówienia, zapraszamy na stronę:<br />
                                                                     <a href="@Url.Action("ViewOfOrderHistory", "Manage", null, "https")" target="_blank">Automatyczne przejście do histrorii zamówień.</a>

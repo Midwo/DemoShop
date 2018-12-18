@@ -24,46 +24,52 @@
                 int sum = 0;
                 foreach (var Order in Model)
                 {
-                    <div class="table-responsive" style="margin-top: 40px;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nr. Zamówienia: @(x--)</th>
-                                    <th>Data zamównienia:</th>
-                                    <th>Razem:</th>
-                                    <th>Wysyłka:</th>
-                                    <th>Podany adres:</th>
-                                    <th>Ilość produktów:</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>@Order.DateCreated</td>
-                                    <td>@Order.SummaryPrice zł</td>
-                                    <td>@Order.ShippingCost zł</td>
-                                    <td>@Order.Country, @Order.City @Order.CityCode, @Order.Street @Order.ApartmentNumber</td>
-                                    <td>
-                                        @{ sum = 0;}
-                                        @foreach (var item in Order.OrderItems)
-                                        {
+            <div class="table-responsive" style="margin-top: 40px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nr. Zamówienia: @(x--)</th>
+                            <th>Data zamównienia:</th>
+                            <th>Razem:</th>
+                            <th>Wysyłka:</th>
+                            <th>Podany adres:</th>
+                            <th>Ilość produktów:</th>
+                            <th>Status</th>
+                            <th>Zapłacone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>@Order.DateCreated</td>
+                            <td>@Order.SummaryPrice zł</td>
+                            <td>@Order.ShippingCost zł</td>
+                            <td>@Order.Country, @Order.City @Order.CityCode, @Order.Street @Order.ApartmentNumber</td>
+                            <td>
+                                @{ sum = 0;}
+                                @foreach (var item in Order.OrderItems)
+                                {
 
-                                            sum += item.Quantity;
-                                        }
-                                        @sum
-                                    </td>
-                                    <td>@Html.DisplayFor(a => Order.State)</td>
+                                    sum += item.Quantity;
+                                }
+                                @sum
+                            </td>
+                            <td>@Html.DisplayFor(a => Order.State)</td>
+                            <td>@Html.DisplayFor(a => Order.PaymentState)</td>
+                        </tr>
 
-                                </tr>
-                            </tbody>
-                        </table>
+                    </tbody>
+                </table>
 
-                        <h6>Uwagi klienta: <span style="background-color:red;">@Order.Comment</span></h6>
-                        <h6>Kontakt e-mail: @Order.Email</h6>
-                        <h6>Kontakt telefon: @Order.Phone</h6>
+                <h6>Uwagi klienta: <span style="background-color:red;">@Order.Comment</span></h6>
+                <h6>Kontakt e-mail: @Order.Email</h6>
+                <h6>Kontakt telefon: @Order.Phone</h6>
+                @if (Order.PaymentState != true)
+                {
+                    @Html.ActionLink("Zapłać teraz!", "PaymentPageID", "ShoppingCart", new { orderID = Order.OrderID }, new { Class = "btn btn-dark" })
 
-                    </div>
+                }
+            </div>
 
                     <div class="table-responsive" style="margin-top: 40px; margin-left: 60px;">
                         <table class="table">
@@ -95,6 +101,7 @@
                         </table>
 
                     </div>
+                   
                 }
             }
             else

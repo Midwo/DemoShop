@@ -5,7 +5,8 @@ Content-Type: text/plain; charset=utf-8
 Witaj,
 Dokonałeś testowego zakupu w sklepie "DemoShop".
 
-Twoje zamówienie jest aktualnie w fazie weryfikacyjnej. Wykonałeś zakupy na kwotę: @Model.Cost zł. Dokonane zakupy zostaną wysłane pod adres: @Model.Address.
+Twoje zamówienie jest aktualnie w fazie weryfikacyjnej i oczekuje na płatność. Wykonałeś zakupy na kwotę: @Model.Cost zł. Dokonane zakupy zostaną wysłane pod adres: @Model.Address.
+Po opłaceniu (wirtualnie, przez testowe płatności (bez używania banku))
 
 W celu śledzenia zamówienia, zapraszamy na stronę:
 @Url.Action("ViewOfOrderHistory", "Manage", null, "https")
