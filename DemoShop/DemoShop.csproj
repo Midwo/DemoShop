@@ -660,6 +660,8 @@
     <Content Include="Views\Emails\CompletedOrder.cshtml" />
     <Content Include="Views\Emails\CompletedOrder.Html.cshtml" />
     <Content Include="Views\Emails\CompletedOrder.Text.cshtml" />
+    <Content Include="Views\Home\Policy.cshtml" />
+    <Content Include="Views\Home\Statute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

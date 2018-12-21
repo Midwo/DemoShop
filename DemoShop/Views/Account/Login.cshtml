@@ -33,16 +33,24 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+                    <div class="col-md-12">
                         <div class="checkbox">
                             @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)<br />
+                            <input id="check1" type="checkbox" onclick="EnableLogin()">
+                            <span>
+                                Akceptuję warunki:
+                                @Html.ActionLink("polityki prywatności", "ViewWithInformation", new { controller = "Home", viewname = "Policy" }),
+                                @Html.ActionLink("regulamin sklepu", "ViewWithInformation", new { controller = "Home", viewname = "Regulamin" }),
+                                @Html.ActionLink("regulamin strony", "ViewWithInformation", new { controller = "Home", viewname = "Statute" })
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Zaloguj" class="btn btn-default" />
+                
+                        <input type="submit" value="Zaloguj" class="btn btn-default tooltip-wrapper" id="buttonLogin" data-toggle="tooltip" title="Musisz wyrazić zgodę!" data-placement="top" disabled />
                     </div>
                 </div>
                 <p>
@@ -59,14 +67,12 @@
                 @Html.AntiForgeryToken()
 
 
-                <button type="submit" class="btn" id="LoginFacebookBotton" name="provider" value="Facebook" title="Logowanie przez Facebook"><span class="fa fa-facebook"></span>Logowanie przez Facebook</button>
-                <button type="submit" class="btn" id="LoginGoogleBotton" name="provider" value="Google" title="Logowanie przez Google"><span class="fa fa-google"></span>Logowanie przez Google</button>
+                <button type="submit" class="btn tooltip-wrapper" data-placement="top" data-toggle="tooltip" id="LoginFacebookBotton" name="provider" value="Facebook" title="Musisz wyrazić zgodę!" disabled><span class="fa fa-facebook"></span>Logowanie przez Facebook</button>
+                <button type="submit" class="btn tooltip-wrapper" data-placement="top"   data-toggle="tooltip" id="LoginGoogleBotton" name="provider" value="Google" title="Musisz wyrazić zgodę!" disabled><span class="fa fa-google"></span>Logowanie przez Google</button>
 
             }
         </section>
     </div>
-
-
 
 
 </div>
@@ -78,10 +84,41 @@
 
 
 
-
-
 @section scripts
     {
     @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        
+        function EnableLogin() {
+            var checkBox1 = document.getElementById("check1");
+            if (checkBox1.checked == true) {
+                document.getElementById("buttonLogin").disabled = false;
+                document.getElementById("LoginFacebookBotton").disabled = false;
+                document.getElementById("LoginGoogleBotton").disabled = false;
+                $("#buttonLogin").attr("title", '');
+                $("#buttonLogin").removeClass('tooltip-wrapper');
+                $("#LoginFacebookBotton").attr("title", '');
+                $("#LoginFacebookBotton").removeClass('tooltip-wrapper');
+                $("#LoginGoogleBotton").attr("title", '');
+                $("#LoginGoogleBotton").removeClass('tooltip-wrapper');
+            }
+            else {
+                document.getElementById("buttonLogin").disabled = true;
+                document.getElementById("LoginFacebookBotton").disabled = true;
+                document.getElementById("LoginGoogleBotton").disabled = true;
+                $("#buttonLogin").attr("title", 'Musisz wyrazić zgodę!');
+                $("#buttonLogin").addClass('tooltip-wrapper');
+                $("#LoginFacebookBotton").attr("title", 'Musisz wyrazić zgodę!');
+                $("#LoginFacebookBotton").addClass('tooltip-wrapper');
+                $("#LoginGoogleBotton").attr("title", 'Musisz wyrazić zgodę!');
+                $("#LoginGoogleBotton").addClass('tooltip-wrapper');
+            }
+        }
+    </script>
+
 }
 

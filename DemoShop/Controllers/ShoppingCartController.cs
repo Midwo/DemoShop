@@ -159,7 +159,7 @@ namespace DemoShop.Controllers
         }
         public ActionResult PaymentPage(Order order)
         {
-            string inputText = "asdasd" + order.SummaryPrice.ToString().Replace(",", ".") + order.OrderID + "adsds2q344234234234";
+            string inputText = "35865" + order.SummaryPrice.ToString().Replace(",", ".") + order.OrderID + "hmYKb44rVMAnS71q";
             ViewBag.SumMD5 = CreateMD5(inputText);
             return View(order);
         }
@@ -260,7 +260,7 @@ namespace DemoShop.Controllers
         }
         public bool IsValid(string md5Sum, string id, string amount, string crc)
         {
-            string inputText = "asdasd" + id + amount.ToString().Replace(",", ".") + crc + "adsds2q344234234234";
+            string inputText = "35865" + id + amount.ToString().Replace(",", ".") + crc + "hmYKb44rVMAnS71q";
             string Md5String = CreateMD5(inputText);
 
             if (md5Sum.ToLower() == Md5String.ToLower())

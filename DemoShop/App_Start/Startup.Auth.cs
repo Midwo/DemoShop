@@ -59,10 +59,11 @@ namespace DemoShop
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+           
             var facebookData = new FacebookAuthenticationOptions()
             {
-                  AppId = "fbid",
-                  AppSecret = "fbsecretpass"
+                AppId = "xxx",
+                AppSecret = "xxx"
             };
             facebookData.Scope.Add("email");
 
@@ -70,8 +71,8 @@ namespace DemoShop
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-               ClientId = "googleID.apps.googleusercontent.com",
-               ClientSecret = "secretgooglepass"
+                ClientId = "xxxx-xxx.apps.googleusercontent.com",
+                ClientSecret = "xx-xxx"
             });
 
         }

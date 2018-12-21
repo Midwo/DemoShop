@@ -9,37 +9,51 @@
     <div class="col-md-12" style="margin: auto; max-width: 300px;">
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
-        @Html.AntiForgeryToken()
-        <h4>Nowe konto</h4>
-        <hr />
-        @Html.ValidationMessage("error", "", new { @class = "text-danger" })
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-12 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control TextBoxForLogin" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            @Html.AntiForgeryToken()
+            <h4>Nowe konto</h4>
+            <hr />
+            @Html.ValidationMessage("error", "", new { @class = "text-danger" })
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-12 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control TextBoxForLogin" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control TextBoxForLogin" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control TextBoxForLogin" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-12 control-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control TextBoxForLogin" })
-                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-12 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control TextBoxForLogin" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Rejestruj" />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input id="check1" type="checkbox" onclick="EnableLogin()">
+                    <span>
+                        Akceptuję warunki:
+                        @Html.ActionLink("polityki prywatności", "ViewWithInformation", new { controller = "Home", viewname = "Policy" }),
+                        @Html.ActionLink("regulamin sklepu", "ViewWithInformation", new { controller = "Home", viewname = "Regulamin" }),
+                        @Html.ActionLink("regulamin strony", "ViewWithInformation", new { controller = "Home", viewname = "Statute" })
+                    </span>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="col-md-12">
+
+                    <input type="submit" class="btn btn-default" value="Rejestruj" data-placement="top" data-toggle="tooltip" id="buttonRegister" title="Musisz wyrazić zgodę!" disabled />
+
+                </div>
+            </div>
+
         }
 
 
@@ -54,5 +68,25 @@
 @section scripts
     {
     @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
+        function EnableLogin() {
+            var checkBox1 = document.getElementById("check1");
+            if (checkBox1.checked == true) {
+                document.getElementById("buttonRegister").disabled = false;
+                $("#buttonRegister").attr("title", '');
+                $("#buttonRegister").removeClass('tooltip-wrapper');
+            }
+            else {
+                document.getElementById("buttonRegister").disabled = true;
+                $("#buttonRegister").attr("title", 'Musisz wyrazić zgodę!');
+                $("#buttonRegister").addClass('tooltip-wrapper');
+            }
+        }
+    </script>
 }
 
